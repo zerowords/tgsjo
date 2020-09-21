@@ -18,10 +18,10 @@ community have continued to provide invaluable aid.
 
 **.....** below signals a command that can be entered
 in the jQt Term window (but not when the graphics
-canvas has focus.
+canvas has focus.)
 
  *.....* below signals an entry or revision that
-applies to the script file gsjo.ijs.
+applies to the script file tgsjo.ijs.
 
 The command *tgsj_run''* at the bottom of the script
 tgsjo.ijs executes the script in jQt (only).
