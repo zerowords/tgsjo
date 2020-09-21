@@ -7,7 +7,7 @@ To install tgsjo enter the **indented** lines in jconsole or jqt.
 ```
    install'github:zerowords/tgsjo'
 installed: zerowords/tgsjo master
-   dir '~addons/tgsjo/'
+   dir '~addons/zerowords/tgsjo/'
 manifest.ijs             278 21-Sep-20 14:21:58
 readme.ijs              4372 21-Sep-20 14:21:58
 tgsjo.ijs              13380 21-Sep-20 14:21:58
@@ -20,4 +20,4 @@ tgsjomoves.ijs          1535 21-Sep-20 14:21:58
 ``` load '~addons/tgsjo/readme.ijs'```
 
 ## Run tgsjo
-``` load '~addons/tgsjo/tgsjo.ijs'```
+``` load 'zerowords/tgsjo'```
