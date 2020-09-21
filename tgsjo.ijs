@@ -6,7 +6,7 @@ coinsert 'jgl2 jgles qtopengl'
 
 coinsert_base_'tgsjo'
 
-Path=. jpath '~addons/tgsjo/'
+Path=. jpath '~addons/zerowords/tgsjo/'
 path=. Path&,
 
 require path 'tgsjoalias.ijs'
