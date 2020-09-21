@@ -10,7 +10,7 @@ VERSION=: '1.0.0'
 
 RELEASE=: ''
 
-FOLDER=: 'zerowords/tgsjo'
+FOLDER=: 'tgsjo'
 
 FILES=: 0 : 0
 tgsjo.ijs
