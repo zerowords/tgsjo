@@ -44,9 +44,9 @@ penColors=: i. 0 3              NB. specimen
 penColors0=: White              NB. default
 penColorA=: 3 : 'penColors=: penColors,penColors0 ' NB. append-1 verb
 
-penstates=: i. 0                NB. specimen
-penstates0=: 1                  NB. default
-penstateA=: 3 : 'penstates=: penstates,penstates0 ' NB. append-1 verb
+penStates=: i. 0                NB. specimen
+penStates0=: 1                  NB. default
+penStateA=: 3 : 'penStates=: penStates,penStates0 ' NB. append-1 verb
 
 pathlines=: i. 0 6
 pathcolors=: i. 0 6
