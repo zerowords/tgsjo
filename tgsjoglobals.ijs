@@ -40,11 +40,11 @@ penColors=: y x}penColors
 )
 
 
-penstate=: verb define         NB. edit verb
-y penstate~ i.#positions
+penState=: verb define         NB. edit verb
+y penState~ i.#positions
 :
-assert.  (#penstates)*./@:>,x
-penstates=: y x}penstates
+assert.  (#penStates)*./@:>,x
+penStates=: y x}penStates
 )
 
 
