@@ -19,7 +19,7 @@ jd=: jumpdown=: jd_tgsjo_
 jl=: jleft=: jl_tgsjo_
 jr=: jright=: jr_tgsjo_
 
-penState=: penState_tgsjo_
+pen=: penState=: penState_tgsjo_
 penColor=: penColor_tgsjo_
 turtleColor=: turtleColor_tgsjo_
 turtleTriangle=: turtleTriangle_tgsjo_
