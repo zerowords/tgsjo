@@ -20,9 +20,9 @@ jl=: jleft=: jl_tgsjo_
 jr=: jright=: jr_tgsjo_
 
 penstate=: penstate_tgsjo_
-pencolor=: pencolor_tgsjo_
-turtlecolor=: turtlecolor_tgsjo_
-turtletriangle=: turtletriangle_tgsjo_
+penColor=: penColor_tgsjo_
+turtleColor=: turtleColor_tgsjo_
+turtleTriangle=: turtleTriangle_tgsjo_
 
 createTurtle=: createTurtle_tgsjo_
 renderTurtles=: renderTurtles_tgsjo_

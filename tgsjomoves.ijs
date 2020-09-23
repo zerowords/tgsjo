@@ -49,7 +49,7 @@ drawlines=: monad define
 if. +./penstates do.
     maskT=. penstates&#
     lines=. y ,. positions
-    colors=. pencolors ,. pencolors
+    colors=. penColors ,. penColors
     pathlines=: pathlines,maskT lines
     pathcolors=: pathcolors,maskT colors
     lineData=:  2 rndm, pathlines 

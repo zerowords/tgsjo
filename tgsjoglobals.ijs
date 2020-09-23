@@ -31,12 +31,12 @@ gl_sel HD
 gl_paint''
 )
 
-pencolor=: verb define         NB. edit verb
-y pencolor~ i.#positions
+penColor=: verb define         NB. edit verb
+y penColor~ i.#positions
 :
-assert.  ({:@$pencolors)-:{:@$y
-assert.  ({.@$pencolors)*./@:>,x
-pencolors=: y x}pencolors
+assert.  ({:@$penColors)-:{:@$y
+assert.  ({.@$penColors)*./@:>,x
+penColors=: y x}penColors
 )
 
 
@@ -48,8 +48,8 @@ penstates=: y x}penstates
 )
 
 
-turtlecolor=: verb define         NB. edit verb
-y turtlecolor~ i.#positions
+turtleColor=: verb define         NB. edit verb
+y turtleColor~ i.#positions
 :
 assert.  ({:@$turtleColors)-:{:@$y
 assert.  ({.@$turtleColors)*./@:>,x
@@ -59,8 +59,8 @@ empty''
 )
 
 
-turtletriangle=: verb define         NB. edit verb
-y turtletriangle~ i.#positions
+turtleTriangle=: verb define         NB. edit verb
+y turtleTriangle~ i.#positions
 :
 assert.  ({:@$turtleTriangles)-:{:@$y
 assert.  ({.@$turtleTriangles)*./@:>,x
@@ -114,13 +114,13 @@ yw y
 NB. a handy verb that combines J and turtle commands
 NB. fun for 3D spirals
 poly3=: 4 : 0
-pencolor Red
+penColor Red
 fd x
 rl y
-pencolor Blue 
+penColor Blue 
 ju x
 yw y
-pencolor White
+penColor White
 jr x
 pt -y
 empty''
@@ -160,20 +160,23 @@ bk:    move turtle(s) backward (steps)
 ju:    jump turtle(s) upward (steps)
 jr:    jump turtle(s) rightward (steps)
 pen:   penstate(s) (up is 0, down 1)
-pencolor:    pencolor(s) (colorname or 3 fractions)
-turtlecolor: turtlecolor(s) (4 colors shape 4 3)
-turtletriangle: turtletriangle(s) (4 coordinates shape 4 3)
-createTurtle: (3 coordinates)
+penColor:    penColor(s) (colorname or 3 fractions)
+turtleColor: turtleColor(s) (4 colors shape 4 3)
+turtleTriangle: turtleTriangle(s) (4 coordinates shape 4 3)
 
 for available colornames try: '='taketo"1 COLORTABLE
+
+only y args are suggestd in commands below
+createTurtle: (3 coordinates)
+clearscreen:  ('')
 )
 
 examples =: 0 : 0
 
-turtlecolor Yellow,Green,Green,:White
+turtleColor Yellow,Green,Green,:White
 
 'Joe Mary' =: createTurtle 0 1 0,:0 _1 0
-(0,Joe,Mary) pencolor Gray,Red,:Blue
+(0,Joe,Mary) penColor Gray,Red,:Blue
 
 20 repeats do 'yw 18[5 repeats do ''yw 72[fd 2'''
 
@@ -189,7 +192,7 @@ clearscreen''
 
 9 repeats do '(360 arcr 0.008)[rt 40'
 fd 1
-pencolor Yellow
+penColor Yellow
 9 repeatsNO 'do' '(360 arcr 0.008)[rt 40'
 )
 

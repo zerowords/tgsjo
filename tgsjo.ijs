@@ -6,7 +6,7 @@ coinsert 'jgl2 jgles qtopengl'
 
 coinsert_base_'tgsjo'
 
-Path=. jpath '~addons/zerowords/tgsjo/'
+Path=. jpath '~addons/tgsjo/'
 path=. Path&,
 
 require path 'tgsjoalias.ijs'
@@ -411,7 +411,7 @@ if. r do.
 end.
 positions=:positions, y
 orientations=: orientations, x
-pencolorA''
+penColorA''
 penstateA''
 
 renderTurtles''

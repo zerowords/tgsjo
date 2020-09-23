@@ -40,9 +40,9 @@ orientations=: i.0 4
 
 turtleScale=:1
 
-pencolors=: i. 0 3              NB. specimen
-pencolors0=: White              NB. default
-pencolorA=: 3 : 'pencolors=: pencolors,pencolors0 ' NB. append-1 verb
+penColors=: i. 0 3              NB. specimen
+penColors0=: White              NB. default
+penColorA=: 3 : 'penColors=: penColors,penColors0 ' NB. append-1 verb
 
 penstates=: i. 0                NB. specimen
 penstates0=: 1                  NB. default
