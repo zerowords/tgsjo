@@ -46,8 +46,8 @@ renderTurtles''
 )
 
 drawlines=: monad define
-if. +./penstates do.
-    maskT=. penstates&#
+if. +./penStates do.
+    maskT=. penStates&#
     lines=. y ,. positions
     colors=. penColors ,. penColors
     pathlines=: pathlines,maskT lines
