@@ -412,7 +412,7 @@ end.
 positions=:positions, y
 orientations=: orientations, x
 penColorA''
-penstateA''
+penStateA''
 
 renderTurtles''
 r
