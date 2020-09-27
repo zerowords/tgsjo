@@ -9,7 +9,7 @@ NB. setting global parameter values  ***************
 ''[do(>@{.,%&255&.".&>@{:)"1]23 split"1 COLORTABLE 
 
 RightLeft=:  1      NB. yaw is left
-RightLeft=: _1      NB. yaw is right NB. left hand axis
+RightLeft=: _1      NB. yaw is right NB. right hand axis
 
 initTurtle=: monad define
 
