@@ -190,10 +190,12 @@ clearscreen''
 1  (2 repeats fdyw) 30       NB. "fdyw" has left and right args
 2 rndm each positions;;/dircos"1 orientations
 
-9 repeats do '(360 arcr 0.008)[rt 40'
+MS_tgsjo_ =: 2   NB. 2 milliseconds, later change back to 100
+2 repeats do '(360 arcr 0.008)[rt 40'
 fd 1
 penColor Yellow
-9 repeatsNO 'do' '(360 arcr 0.008)[rt 40'
+2 repeatsNO 'do' '(360 arcr 0.008)[rt 40'
+NB. then manually execute each boxed command
 )
 
 

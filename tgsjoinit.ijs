@@ -13,20 +13,22 @@ RightLeft=: _1      NB. yaw is right NB. right hand axis
 
 initTurtle=: monad define
 
-queue=:''
+MS=: 200            NB. 200 millisecond delay for turtle actions
+
+queue=:''           NB. associated with conjunction repeatsNO
 Vertices=: 0 2 1,1 2 3,3 2 0,:0 1 3
 LHip=: _9 _4 0
 RHip=: _9  4 0
 Butt=: _7  0 5
 Face=:  0  0 0
 Coordinates=: %&15 LHip,RHip,Butt,:Face
-baseTurtleTriangles=: turtleTriangles=:  ,: Vertices { Coordinates
+turtleTrianges0=: turtleTriangles=:  ,: Vertices { Coordinates
 
 vrtxfface=: (_3 ]\ 3 # ])"2
 
 NB. Red back, blue sides, white bottom
 turtleColors=:,: vrtxfface Red,Blue,Blue,:White
-baseTurtleColors=:turtleColors
+turtleColors0=:turtleColors
 
 
 sceneTriangles=: i.0 0 0

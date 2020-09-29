@@ -6,10 +6,17 @@ coinsert 'jgl2 jgles qtopengl'
 
 coinsert_base_'tgsjo'
 
-Path=. jpath '~addons/zerowords/tgsjo/'
-path=. Path&,
+NB. Path=. jpath '~addons/tgsjo/'
+NB. Path=. jpath '~user/tgsjo/github/'
+NB. Path=. jpath '~addons/zerowords/tgsjo/'
+NB. path=. Path&,
+tgsjopath=:3 :0
+  ({.~ 1+i:&'/')rplc&'\/';(4!:4<'tgsjopath'){4!:3''
+)
+path=. (tgsjopath'')&,
 
 require path 'tgsjoalias.ijs'
+require path 'tgsjoslow.ijs'
 require 'math/misc/quatern'
 
 painter_ready=: initialized=: 0
@@ -79,7 +86,7 @@ commands have abbreviations.
 Move or advance turtles with commands like forward, 
 back, jumpright, jumpleft, jumpup, and jumpdown, 
 followed by amounts. Each of these commands have 
-abbreviations: For hints, type list nl 3 . 
+abbreviations: For hints, type onlylower each slowList
 
 After turning or moving turtles, try this command
 to learn turtle positions and orientations: 
@@ -304,8 +311,10 @@ end.
 )
 
 timer_handler_tgsjo_=:3 :0
-if. #queue do.
-    queue=: }.queue [ ".>{.queue
+if. #instructionQueue_tgsjo_ do.
+     ins=: ;{.instructionQueue_tgsjo_
+    instructionQueue_tgsjo_=: }.instructionQueue_tgsjo_
+    ". ins
 else.
     wd 'timer 0'
 end.
@@ -406,8 +415,8 @@ createTurtle=:3 :0"1
 assert.(,3)-:$y
 r=. #positions
 if. r do.
-    turtleColors =: turtleColors, baseTurtleColors
-    turtleTriangles =: turtleTriangles, baseTurtleTriangles
+    turtleColors =: turtleColors, turtleColors0
+    turtleTriangles =: turtleTriangles, turtleTrianges0
 end.
 positions=:positions, y
 orientations=: orientations, x
