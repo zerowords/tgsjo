@@ -18,5 +18,6 @@ tgsjoalias.ijs
 tgsjoglobals.ijs
 tgsjoinit.ijs
 tgsjomoves.ijs
+tgsjoslow.ijs
 readme.ijs
 )
