@@ -36,20 +36,25 @@ deferToQueue=:1 :0
   i.0 0
 )
 
-refCard=: 0 :0
-  rl:    roll turtle(s) right side upward (degrees)
-  yw:    yaw  turtle(s) right (degrees)
-  pt:    pitch turtle(s) nose downward (degrees)
-  fd:    move turtle(s) forward (steps)
-  bk:    move turtle(s) backward (steps)
-  ju:    jump turtle(s) upward (steps)
-  jr:    jump turtle(s) rightward (steps)
-  pen:   penState(s) (up is 0, down 1)
-  penColor:    penColor(s) (colorname or 3 fractions)
-  turtleColor: turtleColor(s) (4 colors shape 4 3)
-  turtleTriangle: turtleTriangle(s) (4 coordinates shape 4 3)
-  createTurtle: (3 coordinates)
+sys_timer_z_=: sys_timer_tgsjo_=: 3 :0
+try. timer_handler_tgsjo_''
+catch.
+    echo 'caught error in sys_timer_z_'
+    echo 13!:12 ''
+    wd'timer 0'
+end.
 )
+
+timer_handler_tgsjo_=:3 :0
+if. #instructionQueue_tgsjo_ do.
+     ins=: ;{.instructionQueue_tgsjo_
+    instructionQueue_tgsjo_=: }.instructionQueue_tgsjo_
+    ". ins
+else.
+    wd 'timer 0'
+end.
+)
+
 
 onlylower=: 3 : 0
 x=. I. 26 > ((97+i.26){a.) i. t=. ,y
@@ -57,9 +62,7 @@ x{t
 )
 
 slowList=: ;:'yAw rOLl pItCH fORWARd bACk jUMPuP jUMPdOWN jUMPrIGHT jUMPlEFT rrl lrl rolllEFt rollrIGHt dpt upt'
-userCommands=: <@({.~ i.&':');._2 refCard -.32{a.
 
-NB. buildDeferralQueue userCommands
 buildDeferralQueue  onlylower each slowList
 buildDeferralQueue    tolower each slowList
 

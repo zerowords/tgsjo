@@ -301,25 +301,6 @@ gl_paint''
 )
 
 
-sys_timer_z_=: sys_timer_tgsjo_=: 3 :0
-try. timer_handler_tgsjo_''
-catch.
-    echo 'caught error in sys_timer_z_'
-    echo 13!:12 ''
-    wd'timer 0'
-end.
-)
-
-timer_handler_tgsjo_=:3 :0
-if. #instructionQueue_tgsjo_ do.
-     ins=: ;{.instructionQueue_tgsjo_
-    instructionQueue_tgsjo_=: }.instructionQueue_tgsjo_
-    ". ins
-else.
-    wd 'timer 0'
-end.
-)
-
 tgsj_g_paint=:3 :0
 try.paint_handler''
 catch.
