@@ -6,10 +6,6 @@ coinsert 'jgl2 jgles qtopengl'
 
 coinsert_base_'tgsjo'
 
-NB. Path=. jpath '~addons/tgsjo/'
-NB. Path=. jpath '~user/tgsjo/github/'
-NB. Path=. jpath '~addons/zerowords/tgsjo/'
-NB. path=. Path&,
 tgsjopath=:3 :0
   ({.~ 1+i:&'/')rplc&'\/';(4!:4<'tgsjopath'){4!:3''
 )
