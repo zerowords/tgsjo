@@ -8,12 +8,12 @@ NB. setting global parameter values  ***************
 
 ''[do(>@{.,%&255&.".&>@{:)"1]23 split"1 COLORTABLE 
 
-RightLeft=:  1      NB. yaw is left
+RightLeft=:  1      NB. yaw is left  NB. untested
 RightLeft=: _1      NB. yaw is right NB. right hand axis
 
 initTurtle=: monad define
 
-MS=: 200            NB. 200 millisecond delay for turtle actions
+MS=: 0              NB. 0 millisecond delay for turtle actions
 
 queue=:''           NB. associated with conjunction repeatsNO
 Vertices=: 0 2 1,1 2 3,3 2 0,:0 1 3
@@ -21,7 +21,7 @@ LHip=: _9 _4 0
 RHip=: _9  4 0
 Butt=: _7  0 5
 Face=:  0  0 0
-Coordinates=: %&15 LHip,RHip,Butt,:Face
+Coordinates=: %&0.8 LHip,RHip,Butt,:Face
 turtleTrianges0=: turtleTriangles=:  ,: Vertices { Coordinates
 
 vrtxfface=: (_3 ]\ 3 # ])"2

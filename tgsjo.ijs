@@ -7,7 +7,7 @@ coinsert 'jgl2 jgles qtopengl'
 coinsert_base_'tgsjo'
 
 tgsjopath=:3 :0
-  ({.~ 1+i:&'/')rplc&'\/';(4!:4<'tgsjopath'){4!:3''
+({.~ 1+i:&'/')rplc&'\/';(4!:4<'tgsjopath'){4!:3''
 )
 path=. (tgsjopath'')&,
 
@@ -72,8 +72,8 @@ camera and other setting back to their original values.
 To execute them, click first on the graphics canvas.
 
 You can create more turtles using the createTurtle 
-command. For example createTurtle 1 1 0 puts a turtle 
-at x,y = 1,1. 
+command. For example createTurtle 5 5 0 puts a turtle 
+at x,y = 5,5. 
 
 Turn turtles with commands like yaw (right), left, 
 pitch, roll followed by degree amounts. Each of these 
@@ -100,8 +100,8 @@ NB. 100 only allows about   5 steps
 NB.  20      allows about  30 steps
 STEPS0=: STEPS
 NB. try your own R
-R=: 0 0 0
 R=: 20 30 0
+R=: 0 0 0
 R0=: R
 EYE=: 0 0 1
 LR=: UD=: IO=: 0
@@ -296,7 +296,6 @@ gl_sel HD
 gl_paint''
 )
 
-
 tgsj_g_paint=:3 :0
 try.paint_handler''
 catch.
@@ -324,7 +323,7 @@ NB. matrix convention: current matrix on the left
 NB. note pre-multiplication
 
 NB. model-view
-mvp=: (mp/gl_Rotate"1 (,.=@i.@#)R) mp (gl_Scale STEPS%100) mp (gl_Translate 0 0 _19) mp glu_LookAt EYE,LR,UD,IO,UP
+mvp=: (mp/gl_Rotate"1 (,.=@i.@#)R) mp (gl_Scale STEPS%2000) mp (gl_Translate 0 0 _19) mp glu_LookAt EYE,LR,UD,IO,UP
 
 NB. projection
 NB. mvp=: mvp mp gl_Perspective 30, (%/wh),1 10
@@ -384,8 +383,6 @@ gl_sel HD
 gl_paint''
 )
 
-
-
 createTurtle=:3 :0"1
 1 0 0 0 createTurtle y
 :
@@ -399,11 +396,9 @@ positions=:positions, y
 orientations=: orientations, x
 penColorA''
 penStateA''
-
 renderTurtles''
 r
 )
-
 
 NB. rotate y degrees around axis x
 rotation=:4 :0"1 0

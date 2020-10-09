@@ -8,6 +8,7 @@ pi=: 1p1
 sin=: 1&o.
 cos=: 2&o.
 arccos=: _2&o.
+arctan=: _3&o.
 dfr=: *&(180%pi)
 rfd=: *&(pi%180)
 NB. matrix and vector verbs
@@ -31,6 +32,8 @@ gl_sel HD
 gl_paint''
 )
 
+NB. As for movement verbs, dyadic versions apply to turtle list
+NB.    in the next few verbs.    *************
 penColor=: verb define         NB. edit verb
 y penColor~ i.#positions
 :
@@ -39,14 +42,12 @@ assert.  ({.@$penColors)*./@:>,x
 penColors=: y x}penColors
 )
 
-
 pen=: penState=: verb define         NB. edit verb
 y penState~ i.#positions
 :
 assert.  (#penStates)*./@:>,x
 penStates=: y x}penStates
 )
-
 
 turtleColor=: verb define         NB. edit verb
 y turtleColor~ i.#positions
@@ -58,7 +59,6 @@ yw 0
 empty''
 )
 
-
 turtleTriangle=: verb define         NB. edit verb
 y turtleTriangle~ i.#positions
 :
@@ -68,7 +68,6 @@ turtleTriangles=: turtleTriangles x}~Vertices{y
 yw 0
 empty''
 )
-
 
 NB. Below apply only to ALL turtles ********
 
@@ -111,20 +110,37 @@ fd x
 yw y
 )
 
+NB. Turtle Geometry Abelson & diSessa
 NB. a handy verb that combines J and turtle commands
 NB. fun for 3D spirals
 poly3=: 4 : 0
-penColor Red
-fd x
-rl y
-penColor Blue 
-ju x
-yw y
-penColor White
-jr x
-pt -y
-empty''
+totalangle=.0
+p=. positions
+o=. orientations
+whilst. 360|totalangle=.totalangle+y do.
+    penColor Red
+    fd x
+    rl y
+    penColor Blue 
+    ju x
+    yw y
+    penColor White
+    jr x
+    pt y  NB. or -y
+end.
 )
+
+NB. 2 poly 144
+poly=: dyad define
+totalangle=.0
+p=. positions
+o=. orientations
+whilst. 360|totalangle=.totalangle+y do.
+    fd x
+    rt y
+end.
+)
+
 
 NB. eg: 90 arcr 0.01
 arcr=: dyad define
@@ -145,6 +161,82 @@ for. i. x do.
 end.
 )
 
+NB. https://en.wikipedia.org/wiki/Gosper_curve
+NB. 4 gl 50
+NB. be careful not to make x bigger than 4
+gl=: dyad define
+st=.x
+ln=.y
+st=. st - 1
+ln=. ln %%: 7
+if. st > 0 do.
+    lt 60 
+    st rg ln
+    rt 60 
+    st gl ln
+    st gl ln 
+    rt 120 
+    st gl ln 
+    rt 60 
+    st rg ln 
+    lt 120 
+    st rg ln 
+    lt 60 
+    st gl ln
+end.
+if. st = 0 do.
+    lt 60 
+    fd ln 
+    rt 60 
+    fd ln 
+    fd ln 
+    rt 120 
+    fd ln 
+    rt 60 
+    fd ln 
+    lt 120 
+    fd ln 
+    lt 60 
+    fd ln
+end.
+)
+
+rg=: dyad define 
+st=.x
+ln=.y
+st=. st - 1
+ln=. ln %%: 7
+if. st > 0 do.
+    st rg ln
+    rt 60 
+    st gl ln
+    rt 120 
+    st gl ln
+    lt 60 
+    st rg ln
+    lt 120 
+    st rg ln
+    st rg ln
+    lt 60 
+    st gl ln
+    rt 60
+end.
+if. st = 0 do.
+    fd ln 
+    rt 60 
+    fd ln 
+    rt 120 
+    fd ln 
+    lt 60 
+    fd ln 
+    lt 120 
+    fd ln 
+    fd ln 
+    lt 60 
+    fd ln 
+    rt 60
+end.
+)
 
 
 commands =: 0 : 0
@@ -166,36 +258,59 @@ turtleTriangle: turtleTriangle(s) (4 coordinates shape 4 3)
 
 for available colornames try: '='taketo"1 COLORTABLE
 
-only y args are suggestd in commands below
-createTurtle: (3 coordinates)
-clearscreen:  ('')
+createTurtle: (3 coordinates)  [x arg quaternion]
+clearscreen:  ('')  [no y arg]
 )
 
 examples =: 0 : 0
 
 turtleColor Yellow,Green,Green,:White
+;/{.turtleColors   NB. shows current colors at each vertex
 
-'Joe Mary' =: createTurtle 0 1 0,:0 _1 0
+'Joe Mary' =: createTurtle 0 10 0,:0 _10 0
 (0,Joe,Mary) penColor Gray,Red,:Blue
+penColors   NB. shows the current colors
+NB. shows 3 position vertices and 3 direction-cosine matrices
+2 rndm each positions;;/dircos"1 orientations
 
-20 repeats do 'yw 18[5 repeats do ''yw 72[fd 2'''
+20 repeats do 'yw 18[5 repeats do ''yw 72[fd 25'''
 
 Now click on the canvas pane and press F4. Press F4, again.
 Press F3.
 Experiment with x,y,z,l,r,a, and s.
 Remember to click on the Term pane to continue turtle commands.
 
-clearscreen''
+clearscreen''  NB. This resets with initTurtle'' too
 
-1  (2 repeats fdyw) 30       NB. "fdyw" has left and right args
-2 rndm each positions;;/dircos"1 orientations
-
-MS_tgsjo_ =: 2   NB. 2 milliseconds, later change back to 100
-2 repeats do '(360 arcr 0.008)[rt 40'
-fd 1
 penColor Yellow
-2 repeatsNO 'do' '(360 arcr 0.008)[rt 40'
+fd 30[pen 1[fd 10[pen 0[fd 10
+2 repeats do '(360 arcr 0.08)[rt 40'
+
+NB. now to see how repeats works, try repeatsNO
+2 repeatsNO 'do' '(360 arcr 0.08)[rt 40'
 NB. then manually execute each boxed command
+
+NB. next slow down the turtle with MS_tgsjo_
+MS_tgsjo_=: 200   NB. 200 milliseconds, later change back to 0
+20  (3 repeats fdyw) 30       NB. "fdyw" has left and right args
+
+NB. also try 72 60 135 108 with poly
+20 poly 144
+
+clearscreen''  NB. This resets with initTurtle'' too
+MS_tgsjo_=: 0   NB. 0 milliseconds to speed up
+NB. helix? 
+5 (4 repeats poly3)30
+
+clearscreen''  
+4 gl 100 NB. gosper snowflake
+
+NB. Because of a known bug, newly defined multiline j verbs
+NB.    cannot be entered directly into the jqt Term window, so
+NB.    you must define them in an editor and either load
+NB.    them or you can copy them to the clipboard and F8
+NB.    (paste) them into the Term window.
+NB.    The bug is being researched by the fine J team.
 )
 
 
