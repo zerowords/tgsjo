@@ -246,7 +246,7 @@ x args are turtle number(s) or '' for all turtles
 y args are suggested below in parentheses
 yw:    yaw turtle(s) clockwise (degrees)
 rl:    roll turtle(s) right side upward (degrees)
-pt:    pitch turtle(s) nose downward (degrees)
+pt:    pitch turtle(s) nose upward (degrees)
 fd:    move turtle(s) forward (steps)
 bk:    move turtle(s) backward (steps)
 ju:    jump turtle(s) upward (steps)
@@ -300,7 +300,7 @@ NB. also try 72 60 135 108 with poly
 clearscreen''  NB. This resets with initTurtle'' too
 MS_tgsjo_=: 0   NB. 0 milliseconds to speed up
 NB. helix? 
-5 (4 repeats poly3)72
+5 (4 repeats poly3)30
 
 clearscreen''  
 4 gl 100 NB. gosper snowflake

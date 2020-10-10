@@ -8,9 +8,6 @@ NB. setting global parameter values  ***************
 
 ''[do(>@{.,%&255&.".&>@{:)"1]23 split"1 COLORTABLE 
 
-RightLeft=:  1      NB. yaw is left  NB. untested
-RightLeft=: _1      NB. yaw is right NB. right hand axis
-
 initTurtle=: monad define
 
 MS=: 0              NB. 0 millisecond delay for turtle actions

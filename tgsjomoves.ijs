@@ -3,35 +3,7 @@ NB. 3/7/20
 
 cocurrent 'tgsjo'
 
-NB. RightLeft is also used in 'turn'
 rev =: 1 : 'u&:- : (u -)'   NB. reverse for a name change
-Inv =: ^: RightLeft         NB. change axis handedness; change after RightLeft
-
-yw=: yaw     NB. yaw group
-lyw=: yw :.  (yw rev)
-lt=: left=: lyw Inv
-ryw=: (yw rev) :.  yw
-rt=: right=: ryw Inv
-
-rl=: roll     NB. roll group
-lrl=: rl :.  (rl rev)
-rolllt=: rollleft=: lrl 
-rrl=: (rl rev) :.  rl
-rollrt=: rollright=: rrl 
-
-pt=: pitch     NB. pitch group
-upt=: pt :.  (pt rev)
-pitchup=: upt Inv
-dpt=: (pt rev) :.  pt
-pitchdown=: dpt Inv
-
-forward=: fd     NB. move group
-jumpleft=: jl
-ju=: jumpup
-
-jr=: jumpright=: jl rev
-bk=: back=: fd rev
-jd=: jumpdown=: ju rev
 
 move=: adverb define
 (i.#positions)m move y
@@ -74,6 +46,24 @@ ju=: 2 move
 yw=: 2 turn
 pt=: 1 turn
 rl=: 0 turn
+
+right=: rt=: yaw=: yw     NB. yaw group
+ryw=: yw 
+lyw=: lt=: left=: yw rev
+
+rollleft=: rolllt=: lrl=: roll=: rl     NB. roll group
+rollrt=: rollright=: rrl=: rl rev
+
+pitchup=: upt=: pitch=: pt     NB. pitch group
+pitchdown=: dpt=: pt rev
+
+forward=: fd     NB. move group
+jumpleft=: jl
+jumpup=: ju
+
+jr=: jumpright=: jl rev
+bk=: back=: fd rev
+jd=: jumpdown=: ju rev
 
 NB. Below are experimental only
 I=: # inv
