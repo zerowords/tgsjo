@@ -126,7 +126,7 @@ whilst. 360|totalangle=.totalangle+y do.
     yw y
     penColor White
     jr x
-    pt y  NB. or -y
+    pt -y  NB. or y
 end.
 )
 
@@ -300,7 +300,7 @@ NB. also try 72 60 135 108 with poly
 clearscreen''  NB. This resets with initTurtle'' too
 MS_tgsjo_=: 0   NB. 0 milliseconds to speed up
 NB. helix? 
-5 (4 repeats poly3)30
+5 (4 repeats poly3)72
 
 clearscreen''  
 4 gl 100 NB. gosper snowflake
