@@ -1,6 +1,9 @@
 smoutput readme =: 0 : 0
 Readme file for tgsjo.ijs
 
+(also see 
+https://github.com/zerowords/tgsjo/blob/master/README.md )
+
 The purpose of these tgsjo scripts is to demonstrate
 a J-like environment for experimenting with the 
 Logo-like turtle geometry language developed at 
