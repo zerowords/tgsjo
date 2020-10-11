@@ -238,6 +238,29 @@ if. st = 0 do.
 end.
 )
 
+NB. https://www.win.tue.nl/~wstomv/publications/3d-turtle-geometry-reduced-unstyled.pdf
+NB. https://www.win.tue.nl/~wstomv/talks/3d-turtle-geometry-talk-4up-reduced.pdf
+segment=: verb define"1
+(i.#positions)segment y
+:
+'d rla ywa'=. y
+x fd d
+x rl rla
+x yw ywa
+)
+Td=: ([: segment 0 90,~]) :([segment 0 90,~])
+Rd=: ([: segment 90 90,~]) :([segment 90 90,~])
+Pd=: ([: segment 180 90,~]) :([segment 180 90,~])
+Ld=: ([: segment 270 90,~]) :([segment 270 90,~])
+Spiralosaurus=: 3 : 0
+2 repeats Td 5*4
+2 repeats Ld 5*9
+2 repeats Td 5*4
+6 repeats Rd 5*3
+)
+
+
+
 
 commands =: 0 : 0
 
@@ -313,4 +336,16 @@ NB.    (paste) them into the Term window.
 NB.    The bug is being researched by the fine J team.
 )
 
-
+resources=: 0 : 0
+Art and math with turtle commands.
+https://www.win.tue.nl/~wstomv/publications/3d-turtle-geometry-reduced-unstyled.pdf
+Brian Harvey, legendary teacher of logo.
+https://people.eecs.berkeley.edu/~bh/
+https://people.eecs.berkeley.edu/~bh/pdf/v1ch10.pdf
+The Logo foundation, many resources.
+https://el.media.mit.edu/logo-foundation/resources/websites_forums.html
+An unbelievable text with 400 pages and 9 chapters.
+https://www.academia.edu/5203649/Visual_modeling_with_Logo_a_structured_approach_to_seeing
+3D online turtle graphics system
+http://etl.ppp.uoa.gr/malt2/
+)
