@@ -14,8 +14,8 @@ MS=: 0              NB. 0 millisecond delay for turtle actions
 
 queue=:''           NB. associated with conjunction repeatsNO
 Vertices=: 0 2 1,1 2 3,3 2 0,:0 1 3
-LHip=: _9 _4 0
-RHip=: _9  4 0
+LHip=: _9  4 0
+RHip=: _9 _4 0
 Butt=: _7  0 5
 Face=:  0  0 0
 Coordinates=: %&0.8 LHip,RHip,Butt,:Face
