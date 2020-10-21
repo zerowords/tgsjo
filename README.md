@@ -38,4 +38,7 @@ tgsjoslow.ijs           1685 29-Sep-20 16:33:41
 ``` load '~addons/tgsjo/readme.ijs'```
 
 ## Run tgsjo
-``` load 'zerowords/tgsjo'```
+```
+load 'zerowords/tgsjo'
+createTurtle 0 0 0
+```
