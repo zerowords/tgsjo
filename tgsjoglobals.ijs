@@ -2,7 +2,7 @@ NB. tgsjoglobals.ijs
 NB. 3/1/2020
 
 cocurrent 'tgsjo'
-NB. defining some globals            ***************
+NB. defining some global utilities            ***************
 
 pi=: 1p1
 sin=: 1&o.
@@ -26,10 +26,37 @@ NB. 3.1416
 cl=: 2 rndm
 
 bgcolor=: 3 : 0
+smoutput 'Bcolor_tgsjo_ was: ', ":Bcolor_tgsjo_
 wh=. gl_qwh''
 Bcolor_tgsjo_ =: 4{.!.1 y
 gl_sel HD
 gl_paint''
+Bcolor_tgsjo_
+)
+
+msec=: 3 : 0
+smoutput 'MS_tgsjo_ was: ', ":MS_tgsjo_
+MS_tgsjo_=: +|y
+)
+
+rotR=: 3 : 0
+smoutput 'R_tgsjo_ was: ', ":R_tgsjo_
+if. y-:'' do. y =. R0_tgsjo_ end.
+wh=. gl_qwh''
+R_tgsjo_=: 3{.y
+gl_sel HD
+gl_paint''
+R_tgsjo_
+)
+
+translate=: 3 : 0
+smoutput 'T_tgsjo_ was: ', ":T_tgsjo_
+if. y-:'' do. y =. T0_tgsjo_ end.
+wh=. gl_qwh''
+T_tgsjo_=: 3{.y
+gl_sel HD
+gl_paint''
+T_tgsjo_
 )
 
 NB. As for movement verbs, dyadic versions apply to turtle list
@@ -55,6 +82,16 @@ y turtleColor~ i.#positions
 assert.  ({:@$turtleColors)-:{:@$y
 assert.  ({.@$turtleColors)*./@:>,x
 turtleColors=: turtleColors x}~vrtxfface y
+yw 0
+empty''
+)
+
+turtleEyeColor=: verb define         NB. edit verb
+y turtleEyeColor~ i.#positions
+:
+assert.  ({:@$turtleEyeColors)-:{:@$y
+assert.  ({.@$turtleEyeColors)*./@:>,x
+turtleEyeColors=: turtleEyeColors x}~vrtxfface y
 yw 0
 empty''
 )
@@ -283,18 +320,38 @@ for available colornames try: '='taketo"1 COLORTABLE
 
 createTurtle: (3 coordinates)  [x arg quaternion]
 clearscreen:  ('')  [no y arg]
+clearlines:   ('')  [no y arg]
+msec:         slow movements in millisecs (0)
+translate:    translate Eye (0 0 _19 is default)
+rotR:         rotate Eye (20 30 0 is default)
+bgcolor:      background color (colorname or 3 fractions)
 )
 
 examples =: 0 : 0
 
-turtleColor Yellow,Green,Green,:White
-;/{.turtleColors   NB. shows current colors at each vertex
+sweetP=: createTurtle 0 0 0
+translate 0 0 _3
+turtleEyeColor Yellow,:Yellow
+lilT=: createTurtle 20 0 0
+lilT turtleEyeColor White,:White
+rotR 0 0 0
 
-'Joe Mary' =: createTurtle 0 10 0,:0 _10 0
-(0,Joe,Mary) penColor Gray,Red,:Blue
+lilT turtleColor Yellow,Green,Green,:White
+;/{.turtleColors   NB. first turtle's colors at each vertex
+;/{.turtleEyeColors   NB. similar for turtle eye colors
+
+translate''  NB. return Eye/Camera to original position
+NB. ct is an abbreviation for createTurtle
+'Betty Joe Mary' =: ct _10 0 0,_10 10 0,:_10 _10 0
+(Joe,Mary) penColor Red,:Blue
 penColors   NB. shows the current colors
-NB. shows 3 position vertices and 3 direction-cosine matrices
+lt 45
+2 3 4 fd 30 
+0 1 bk 30 25
+NB. shows 5 position vertices and 5 direction-cosine matrices
 2 rndm each positions;;/dircos"1 orientations
+
+ct 0 0 0[clearscreen'' NB. This resets with initTurtle'' too
 
 20 repeats do 'yw 18[5 repeats do ''yw 72[fd 25'''
 
@@ -303,7 +360,8 @@ Press F3.
 Experiment with x,y,z,l,r,a, and s.
 Remember to click on the Term pane to continue turtle commands.
 
-clearscreen''  NB. This resets with initTurtle'' too
+ct 0 0 0[cs'' NB. cs is an abbreviation for clearscreen
+rotR''   NB. rotate Eye/Camera to default 20 30 0
 
 penColor Yellow
 fd 30[pen 1[fd 10[pen 0[fd 10
@@ -314,19 +372,20 @@ NB. now to see how repeats works, try repeatsNO
 NB. then manually execute each boxed command
 
 NB. next slow down the turtle with MS_tgsjo_
-MS_tgsjo_=: 200   NB. 200 milliseconds, later change back to 0
+msec 200   NB. 200 milliseconds, later change back to 0
 20  (3 repeats fdyw) 30       NB. "fdyw" has left and right args
 
 NB. also try 72 60 135 108 with poly
 20 poly 144
 
-clearscreen''  NB. This resets with initTurtle'' too
-MS_tgsjo_=: 0   NB. 0 milliseconds to speed up
+ct 0 0 0[cs'' 
+msec 0   NB. 0 milliseconds to speed up
 NB. helix? 
-5 (4 repeats poly3)30
+10 poly3 30
 
-clearscreen''  
-4 gl 100 NB. gosper snowflake
+ct 0 0 0[cs'' 
+rotR''
+3 gl 100 NB. gosper snowflake (do not increase the 3 above 4)
 
 NB. Because of a known bug, newly defined multiline j verbs
 NB.    cannot be entered directly into the jqt Term window, so

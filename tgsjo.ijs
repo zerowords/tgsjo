@@ -73,7 +73,7 @@ To execute them, click first on the graphics canvas.
 
 You can create more turtles using the createTurtle 
 command. For example createTurtle 5 5 0 puts a turtle 
-at x,y = 5,5. 
+at x,y,z = 5,5,0. 
 
 Turn turtles with commands like yaw (right), left, 
 pitch, roll followed by degree amounts. Each of these 
@@ -88,22 +88,21 @@ After turning or moving turtles, try this command
 to learn turtle positions and orientations: 
 2 rndm each positions;;/dircos"1 orientations
 
-Type: commands
-Type: examples
+Type: commands, examples, or resources
 )
 
 
 tgsj_run=: 3 : 0       NB. *************** start here
 tgsj_close''
 STEPS=: 100    NB. smaller numbers enable more turtle steps and makes turtle smaller
-NB. 100 only allows about   5 steps
-NB.  20      allows about  30 steps
+NB. 100 allows about 110 steps
 STEPS0=: STEPS
 NB. try your own R
-R=: 20 30 0
 R=: 0 0 0
+R=: 20 30 0
 R0=: R
-EYE=: 0 0 1
+T=: T0=: 0 0 _19
+EYE=: EYE0=: 0 0 1
 LR=: UD=: IO=: 0
 UP=: 0 1 0
 sprog=: 0
@@ -122,7 +121,9 @@ wd 'sm focus term'
 
 NB. used for turtle moves and turns
 sendGeometry=: 3 :0
-vertexpaint=: 'vertex norm color' y init_vertex_buffers renderTriangles;renderNormals;renderColors
+names=. 'vertex norm color'
+data=. (renderTriangles,eyerenderTriangles);(renderNormals,eyerenderNormals);(renderColors,eyerenderColors) 
+vertexpaint=: names y init_vertex_buffers data
 try. if. #lineData do.
     linepaint=: 'vertex color' y init_line_buffers renderLines;renderLcolors end.
 catch.
@@ -136,7 +137,7 @@ NB. each number will be native 32 bit ieee 754 binary floating point
 init_vertex_buffers=:1 :0
 :
 program=. m
-assert. */({:@$@> y) e. 1 2 3 4 assert. 1=#~.*/@}:@$@> y
+NB. assert. */({:@$@> y) e. 1 2 3 4 assert. 1=#~.*/@}:@$@> y
 if. L. x do. names=. x else. names=. ;: x end. assert. names -:&# y
 buffers=. vbo{.~#names
 r=.i.0 0 for_name. names do. j=.name_index
@@ -222,7 +223,16 @@ initTurtle''
 erase ;:'lineData lcolorData'
 vertex_clear=: 'vertex norm color' 10 clear_vertex_buffers sceneTriangles;sceneNormals;sceneColors
 linepaint=: 'vertex color' 10 clear_line_buffers sceneLines;sceneLcolors
-createTurtle 0 0 0
+sendGeometry sprog
+renderTurtles''
+)
+
+clearlines=: monad define
+erase ;:'lineData lcolorData'
+pathlines=: i. 0 6
+pathcolors=: i. 0 6
+linepaint=: 'vertex color' 10 clear_line_buffers sceneLines;sceneLcolors
+gl_paint''
 )
 
 showGlString=:3 :0
@@ -281,6 +291,7 @@ sprog=: prog
 tgsj_g_char=: 3 : 0
 if. 0=#sysdata do. return. end.
 R=: 360 | R + 2 * 'xyz' = 0 { sysdata
+R=: 360 | R - 2 * 'XYZ' = 0 { sysdata
 k=. 0{sysdata
 STEPS=: 200 <. STEPS + 's' = k
 STEPS=: 3 >. STEPS - 'a' = k
@@ -323,7 +334,7 @@ NB. matrix convention: current matrix on the left
 NB. note pre-multiplication
 
 NB. model-view
-mvp=: (mp/gl_Rotate"1 (,.=@i.@#)R) mp (gl_Scale STEPS%2000) mp (gl_Translate 0 0 _19) mp glu_LookAt EYE,LR,UD,IO,UP
+mvp=: (mp/gl_Rotate"1 (,.=@i.@#)R) mp (gl_Scale STEPS%2000) mp (gl_Translate T) mp glu_LookAt EYE,LR,UD,IO,UP
 
 NB. projection
 NB. mvp=: mvp mp gl_Perspective 30, (%/wh),1 10
@@ -338,7 +349,7 @@ er glUniformMatrix4fv mvpUni; 1; GL_FALSE; mvp
 
 paint_vertex_buffers vertexpaint
 
-er glDrawArrays GL_TRIANGLES; 0; */}:$renderTriangles
+er glDrawArrays GL_TRIANGLES; 0; */}:$renderTriangles,eyerenderTriangles
 
 paint_line_buffers linepaint
 
@@ -349,21 +360,25 @@ er glDisable GL_DEPTH_TEST
 
 er glUseProgram 0
 
-er gl_clear ''
-er gl_rgb 255 255 255
-er gl_textcolor ''
-er gl_textxy 10 30
-er gl_text '(this window) keys: x y z a s l r F4 F3'
-er gl_textxy 10 50
-er gl_text 'scale: ',":STEPS%100
-er gl_textxy 10 70
-er gl_text 'angle: ',":R
-er gl_textxy 10 90
-if. 0=sprog do. return. end.
-er gl_text 'matrix:'
-for_i. i.4 do.
-    er gl_textxy 10, 105+i*15
-    er gl_text 6j2": i{mvp
+    er gl_clear ''
+    er gl_rgb 255 255 255
+    er gl_textcolor ''
+    er gl_textxy 10 30
+if. #positions do.
+    er gl_text '(this window) keys: x y z a s l r F4 F3'
+    er gl_textxy 10 50
+    er gl_text 'scale: ',":STEPS%100
+    er gl_textxy 10 70
+    er gl_text 'angle: ',":R
+    er gl_textxy 10 90
+    if. 0=sprog do. return. end.
+    er gl_text 'matrix:'
+    for_i. i.4 do.
+        er gl_textxy 10, 105+i*15
+        er gl_text 6j2": i{mvp
+    end.
+else. 
+    gl_text'First, create a turtle (at the origin?): createTurtle 0 0 0'
 end.
 painter_ready=: 1
 )
@@ -375,7 +390,7 @@ GO=: -.GO
 tgsj_f3_fkey=: 3 : 0  NB. Reset camera
 STEPS=: STEPS0
 R=: R0
-EYE=: 0 0 1
+EYE=: EYE0
 LR=: UD=: IO=: 0
 UP=: 0 1 0
 wd TGSO
@@ -384,13 +399,15 @@ gl_paint''
 )
 
 createTurtle=:3 :0"1
-1 0 0 0 createTurtle y
+1 0 0 0 createTurtle 3{.y
 :
 assert.(,3)-:$y
 r=. #positions
 if. r do.
     turtleColors =: turtleColors, turtleColors0
-    turtleTriangles =: turtleTriangles, turtleTrianges0
+    turtleTriangles =: turtleTriangles, turtleTriangles0
+    turtleEyeColors =: turtleEyeColors, turtleEyeColors0
+    turtleEyeTriangles =: turtleEyeTriangles, turtleEyeTriangles0
 end.
 positions=:positions, y
 orientations=: orientations, x
@@ -465,16 +482,18 @@ assert. 3 3 -: }.$ta
 
 renderTurtles=:3 :0
 facing=. dircos"1 orientations
-renderColors=: sceneColors 
-try. 
-    renderLines=: _3]\lineData
-    renderLcolors=: _3]\lcolorData
-catch. end.
-renderTriangles=: sceneTriangles
-renderNormals=: sceneNormals
+eyerenderColors=: renderColors=: sceneColors 
+eyerenderTriangles=: renderTriangles=: sceneTriangles
+eyerenderNormals=: renderNormals=: sceneNormals
 for_turtle.i.#positions do.
     (turtle{turtleColors) 'render'addTriangle"_1 (turtle{positions)+"1 (turtle{turtleTriangles)+/ .* turtle{facing
+    fudge=. _0.1 0.1 *"0 1]0 1 0 rot2dir"1 turtle{orientations  NB. based on pretend jumpleft
+    (turtle{turtleEyeColors) 'eyerender'addTriangle"_1 ((turtle{positions)+"1 (turtle{turtleEyeTriangles)+/ .* turtle{facing)+"1"3 2 fudge
 end.
+try. 
+    renderLines=: turtleScale*_3]\lineData
+    renderLcolors=: _3]\lcolorData
+catch. end.
 if. initialized do.
     sendGeometry  sprog
 end.
@@ -512,8 +531,7 @@ gl_FragColor= v_color;
 }
 )
 initTurtle''
-NB. opengl crashes us if we feed it empty geometry
-createTurtle 0 0 0
+renderTurtles''
 wd 'timer 500'
 
 tgsj_run''

@@ -76,7 +76,7 @@ slowList=: ;:'yAw rOLl pItCH fORWARd bACk jUMPuP jUMPdOWN jUMPrIGHT jUMPlEFT rrl
 
 buildDeferralQueue  onlylower each slowList
 buildDeferralQueue    tolower each slowList
-buildDeferralQueue   ;:'penColor pen penState turtleColor triangleColor' 
+buildDeferralQueue   ;:'penColor pen penState turtleColor turtleEyeColor triangleColor' 
 
 cocurrent'base'
 
