@@ -20,6 +20,7 @@ nrmlz=: ] % [: length ]
 I3=: =@i. 3
 
 copies =: $,:
+NB. round to m decimal digits
 rndm =: 1 : ' <.@:+&0.5&.(%&(10^-m))'
 NB.    4 rndm pi
 NB. 3.1416
@@ -296,6 +297,88 @@ Spiralosaurus=: 3 : 0
 6 repeats Rd 5*3
 )
 
+
+rnd=: <.@(0.5&+)
+HSqrt3=: 2%~%:3
+Sqrt3=: %:3
+Sqrt2=: %:2
+HSqrt2=: 2%~%:2
+oddQ=: 2&|
+evenQ=: -.@oddQ
+duple=: 4&|
+double=: 2&#
+across=: (0 1$~-:@#) |:@:(|."_1) (_2]\])  NB. 9/19/9
+Foursomes=: i. 4
+
+dosido_tgsjo_=: dyad define
+NB. quarters=. rnd NumSteps*y NB. number of quarter revolutions
+quarters=. 4
+pairs=. x NB. couple pairs
+dancers=. ,/ pairs
+if. oddQ quarters do. smoutput 'nonce' return. end.
+NB. face pairs
+dancers lt 45
+while. quarters do.
+  dancers fd y*HSqrt2
+  dancers rt 45
+  dancers fd y*0.5
+  quarters=. <: quarters
+  if. 0=quarters do. return. end.
+  dancers fd y*0.5
+  dancers rt 45
+  dancers fd y*HSqrt2
+  dancers lt 45
+  quarters=. <: quarters
+  if. 0=quarters do.
+    if. Foursomes nneQ dancers do.
+      position=. Foursomes i. {."1 pairs
+      perm=. I_4 C.~ <duple position
+    else.
+      position=. Foursomes i."1 ({.,{:)"1 pairs
+      perm=. I_4 C.~ <"1 duple |: position
+    end.
+    NB. DancerSymbols {~ each sfd arrangeFoursomes perm
+    return.
+  end.
+  dancers lt 45
+  dancers bk y*HSqrt2
+  dancers rt 45
+  dancers bk y*0.5
+  quarters=. <: quarters
+  if. 0=quarters do. return. end.
+  dancers bk y*0.5
+  dancers rt 45
+  dancers bk y*HSqrt2
+  dancers lt 45
+  quarters=. <: quarters
+  if. 0=quarters do.
+    NB. DancerSymbols {~ each sfd Dancers
+    return.
+  end.
+  dancers y*lt 45
+end.
+)
+
+Note 'dosido setup'
+LHip_tgsjo_=: %&5 LHip_tgsjo_
+RHip_tgsjo_=: %&5 RHip_tgsjo_
+Butt_tgsjo_=: %&5 Butt_tgsjo_
+Face_tgsjo_=: %&5 Face_tgsjo_
+NB. Coordinates_tgsjo_=: %&5 Coordinates_tgsjo_
+
+rotR 45  0 0 
+translate _0.5 0 _3
+clearscreen''
+'lead0 follow0 lead1 follow1' =: createTurtle 0 0 0,0 _10 0,10 _10 0,:10 0 0
+'lead2 follow2 lead3 follow3' =: createTurtle 20 0 0,20 _10 0,30 _10 0,:30 0 0
+(lead1,follow1,lead3,follow3)rt 180
+(".&>'follow' nl 0) penColor Yellow
+(".&>'follow' nl 0) turtleEyeColor Yellow
+0 1 4 5 turtleColor Yellow,Brown,Brown,:Gray
+
+msec 400
+(i.2 4)dosido 4
+)
 
 
 

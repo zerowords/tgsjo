@@ -42,7 +42,6 @@ if. m do. r else. y end.
 er=:0 err
 
 mp=: +/ .*"2
-cp=: ((1|.[) * _1|.]) - (_1|.[) * 1|.]
 
 
 tgsj_cancel=: tgsj_close=: 3 :0
@@ -398,7 +397,7 @@ gl_sel HD
 gl_paint''
 )
 
-createTurtle=:3 :0"1
+ct=: createTurtle=:3 :0"1
 1 0 0 0 createTurtle 3{.y
 :
 assert.(,3)-:$y

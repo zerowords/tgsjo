@@ -68,23 +68,24 @@ jd=: jumpdown=: ju rev
 NB. Below are experimental only
 I=: # inv
 darctan=:dfr@arctan@%
-NB. m is 0 1 or 2 for fd jl or ju
+NB. m is 0 1 or 2 for xy or z marking the axis 
+NB.     orthogonal to the plane that turtle will turn in
 NB. This untesed adverb works only for direction
 NB.    changes within a single plane at a time
 NB.    So for example looking at 111 from 000
 NB.    has to me done it 2 steps. Eg first 
 NB.    looking toward 110 and then 
 NB.    looking toward 111 from there.
+NB. But for the second towards is tricky because 
+NB.    it must be done in an axis plane, too.
+NB. The result is a new heading for the turtle,
+NB.    not the amount it must turn
 towards=: adverb define
 (i.#positions)m towards y
 :
 ind=. m-.~i. 3
 dist=.y-&(ind&{)"1 (,x){positions
-chk0=. -. 0 0 *./ . ="1 dist
-dist=. chk0#dist
-x=. chk0#x
-NB. apparently yw and rl have to be negated in next line
-(_1^m+1)* (,chk0) I ((180+darctan/~)`(90**@[/~)`(darctan/~)@.(1&+@*@[))/"1 dist
+((180+darctan~)`(90**@])`(darctan~)@.(1&+@*@[))/"1 dist
 )
 
 NB. this is an untested variation on glu_LookAt 
