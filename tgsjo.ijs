@@ -441,12 +441,14 @@ R22=.+/1 _1 _1 1*q2
 R00`R01`R02,R10`R11`R12,:R20`R21`R22
 )
 
+atan2 =: 12 o. j. 
 q2euler=:3 :0"1
-phi=. _3 o. 2*(+/*/(0 2,:1 3){ y) % 1 - 2 * +/*: 1 2 { y
+phi=. ( 2*(+/*/(0 2,:1 3){ y)) atan2~ 1 - 2 * +/*: 1 2 { y
 tht=. _1 o. 2* -/*/(0 3,:2 1){ y
-psi=. _3 o. 2*(+/*/(0 1,:2 3){ y) % 1 - 2 * +/*: 2 3 { y
+psi=. (2*(+/*/(0 1,:3 2){ y)) atan2~ 1 - 2 * +/*: 2 3 { y
 180p_1*phi,tht,psi
 )
+
 
 NB. x is a direction vector
 NB. y is a rotation quaternion
