@@ -43,19 +43,19 @@ fd=: 0 move
 jl=: 1 move
 ju=: 2 move
 
-yw=: 2 turn
-pt=: 1 turn
-rl=: 0 turn
+yw=: 2 turn rev
+pt=: 1 turn rev
+rl=: 0 turn rev
 
-right=: rt=: yaw=: yw     NB. yaw group
-ryw=: yw 
-lyw=: lt=: left=: yw rev
+left=: lt=: yaw=: yw     NB. yaw group
+lyw=: yw 
+ryw=: rt=: right=: yw rev
 
-rollleft=: rolllt=: lrl=: roll=: rl     NB. roll group
-rollrt=: rollright=: rrl=: rl rev
+rollright=: rollrt=: rrl=: roll=: rl     NB. roll group
+rolllt=: rollleft=: lrl=: rl rev
 
-pitchup=: upt=: pitch=: pt     NB. pitch group
-pitchdown=: dpt=: pt rev
+pitchdown=: dpt=: pitch=: pt     NB. pitch group
+pitchup=: upt=: pt rev
 
 forward=: fd     NB. move group
 jumpleft=: jl
