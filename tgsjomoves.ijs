@@ -102,3 +102,106 @@ u=. s ((1&|.@:[ * _1&|.@:]) - _1&|.@:[ * 1&|.@:]) f
 M=. rPitch mp _3]\ s,  u,  (-f) 
 )
 
+normalize=: %length
+sm=: [
+diag =: (<0 1)&|:
+a21=:5 7&{@,
+a02=: 6 2&{@,
+a10=: 1 3&{@,
+lookAtMat=: monad define
+mat=. y
+sm trace=. +/diag mat
+if. trace > 0 do.
+smoutput 'positive',":s =: 0.5 % %: 1+trace
+sm q0 =: 0.25%s
+sm q1 =: s*-/a21 mat
+sm q2 =: s*-/a02 mat
+sm q3 =: s*-/a10 mat
+else. 
+if. (>/0 1{diag mat)*.>/0 2{diag mat do.
+   smoutput 'zerolarge',":s =: 2.0 * %: 1.0 + -`+/diag mat
+   sm q0 =: s%~-/a21 mat
+   sm q1 =: 0.25*s
+   sm q2 =: s%~+/a10 mat
+   sm q3 =: s%~+/a02 mat
+elseif. >/1 2{diag mat do.
+   smoutput '1>2',":s =: 2.0 * %: 1.0 + -`+/1 0 2{diag mat
+   sm q0 =: s%~-/a02 mat
+   sm q1 =: s%~+/a10 mat
+   sm q2 =: 0.25*s
+   sm q3 =: s%~+/a21 mat
+elseif. 1 do.
+   smoutput 'else',":s =: 2.0 * %: 1.0 +  -`+/2 0 1{diag mat
+   sm q0 =: s%~-/a10 mat
+   sm q1 =: s%~+/a02 mat
+   sm q2 =: s%~+/a21 mat
+   sm q3 =: 0.25*s
+end.
+end.
+smoutput 'length: ',":length q0,q1,q2,q3
+smoutput 'q2euler: ',":2 rndm q2euler q0,q1,q2,q3
+q0,q1,q2,q3
+)
+
+normalize =: %length
+revyz=: 0 2 1&{"1
+sm=: [
+lookAt=: monad define
+target=. y
+   sm F=: normalize target -&revyz&, positions
+   sm R=: normalize cross/ F,: revyz 0 0 1
+   sm U=: cross/ R,:F
+   sm Trace=: (0{R),(1{U),2{F
+   trace=. +/Trace
+if. trace > 0 do.
+smoutput 'positive: ',":s =: 0.5 % %: 1+trace
+sm q0 =: 0.25%s
+sm q1 =: s*(2{U)- 1{F
+sm q2 =: s*(0{F)- 2{R
+sm q3 =: s*(1{R)- 0{U
+else. 
+if. ((0{R)>1{U)*. (0{R)>2{F  do.
+   smoutput 'bigR: ',":s =: 2.0 * %: 1.0 + (0{R) - (1{U) + 2{F
+   sm q0 =: s%~(2{U)- 1{F
+   sm q1 =: 0.25*s
+   sm q2 =: s%~(0{U)+ 1{R
+   sm q3 =: s%~(0{F)+ 2{R
+elseif. (1{U)>2{F do.
+   smoutput 'U>F: ',":s =: 2.0 * %: 1.0 + (1{U) - (0{R) + 2{F
+   sm q0 =: s%~(0{F)- 2{R
+   sm q1 =: s%~(0{U)+ 1{R
+   sm q2 =: 0.25*s
+   sm q3 =: s%~(1{F)+ 2{U
+elseif. 1 do.
+   smoutput 'else: ',":s =: 2.0 * %: 1.0 + (2{F) - (0{R) + 1{U
+   sm q0 =: s%~(1{R)- 0{U
+   sm q1 =: s%~(0{F)+ 2{R
+   sm q2 =: s%~(1{F)+ 2{U
+   sm q3 =: 0.25*s
+end.
+end.
+smoutput 'length: ',":length q0,q1,q2,q3
+smoutput 'q2euler: ',":2 rndm q2euler q0,q1,q2,q3
+q0,q1,q2,q3
+)
+
+
+runtest=: monad define
+clearscreen''
+createTurtle 0 0 0
+t=.y
+yw t
+pt _30
+smoutput '*******yw ',": t
+smoutput orientations
+fd 10
+target=. positions
+fd _10
+pt 30
+yw -t
+smoutput lookAt target
+)
+
+NB. some usage examples
+NB. lookAtMat 3 3{.(gl_Rotate 30 0 1 0) mp gl_Rotate _45 0 0 1
+NB. runtest"0] 45 _45 135 _135
