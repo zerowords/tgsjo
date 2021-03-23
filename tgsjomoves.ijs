@@ -144,13 +144,12 @@ q0,q1,q2,q3
 )
 
 normalize =: %length
-revyz=: 0 2 1&{"1
 sm=: [
 lookAt=: monad define
 target=. y
-   sm F=: normalize target -&revyz&, positions
-   sm R=: normalize cross/ F,: revyz 0 0 1
-   sm U=: cross/ R,:F
+   sm R=: normalize target -&, positions
+   sm U=: normalize cross/ R,: 0 0 1
+   sm F=: cross/ U,:R
    sm Trace=: (0{R),(1{U),2{F
    trace=. +/Trace
 if. trace > 0 do.
@@ -180,7 +179,7 @@ elseif. 1 do.
    sm q3 =: 0.25*s
 end.
 end.
-smoutput 'length: ',":length q0,q1,q2,q3
+sm 'length: ',":length q0,q1,q2,q3
 smoutput 'q2euler: ',":2 rndm q2euler q0,q1,q2,q3
 q0,q1,q2,q3
 )
