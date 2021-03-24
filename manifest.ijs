@@ -13,7 +13,7 @@ RELEASE=: ''
 FOLDER=: 'zerowords/tgsjorighthand'
 
 FILES=: 0 : 0
-tgsjo.ijs
+tgsjorighthand.ijs
 tgsjoalias.ijs
 tgsjoglobals.ijs
 tgsjoinit.ijs
