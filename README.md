@@ -23,11 +23,11 @@ To install tgsjo enter the **indented** lines in jconsole or jqt.
 
 ```
    install'github:zerowords/tgsjo@righthand'
-installed: zerowords/tgsjo righthand
+installed: zerowords/tgsjo righthand into folder: zerowords/tgsjorighthand
    dir '~addons/zerowords/tgsjorighthand/'
 manifest.ijs             292 29-Sep-20 16:26:06
 readme.ijs              4374 23-Sep-20 17:14:52
-tgsjo.ijs              13687 29-Sep-20 16:23:02
+tgsjorighthand.ijs     13687 29-Sep-20 16:23:02
 tgsjoalias.ijs           440 29-Sep-20 16:23:02
 tgsjoglobals.ijs        3676 29-Sep-20 16:23:02
 tgsjoinit.ijs           1334 29-Sep-20 16:23:02
@@ -35,7 +35,7 @@ tgsjomoves.ijs          1535 23-Sep-20 18:28:25
 tgsjoslow.ijs           1685 29-Sep-20 16:33:41
 ```
 ## More readme
-``` load '~addons/tgsjorighthand/readme.ijs'```
+``` load '~addons/zerowords/tgsjorighthand/readme.ijs'```
 
 ## Run tgsjo
 ```
