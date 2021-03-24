@@ -102,6 +102,7 @@ u=. s ((1&|.@:[ * _1&|.@:]) - _1&|.@:[ * 1&|.@:]) f
 M=. rPitch mp _3]\ s,  u,  (-f) 
 )
 
+normalize =: %length
 lookAt=: verb define
 (i.#positions)lookAt y
 :
