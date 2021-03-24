@@ -36,20 +36,27 @@ in the J user directory. If necessary, change the
 definition of the noun *path* near the top of the
 script tgsjo.ijs.
 
-Upon successful (automatic) initialization of the tgsjo
-system, a single turtle will be created at position
-x,y,z:0 0 0. You will see turtle 0 in the center of the
+Upon successfully loading the tgsjo system, a single 
+turtle can be created at position x,y,z:0 0 0, 
+by entering **createTurtle 0 0 0**. 
+You will see turtle 0 in the center of the
 graphics canvas facing east. You can immediately give
-turtle 0 monadic commands to turtle 0 such as **fd
-20**, **rt 90**, **lt 45**. The commands are monadic,
+turtle 0 monadic commands such as **fd 20**, 
+**rt 90**, **lt 45**. The commands are monadic,
 meaning they have only a righthand argument. As monadic
 commands they apply to all existing turtles created
-with the **createTurtle x,y,z** command. If you wish to
-give different turtle commands to different turtles, a
-lefthand argument will accept its or their turtle
-numbers. Because **createTurtle 0 0 0** returns an
-index number for each turtle it creates, you can even
-assign a name to each turtle, to be used alternatively
+with the **createTurtle x,y,z** command. 
+
+Lefthand arguments to turtle commands are 
+optional. If not provided, all turtles are assumed.
+If you wish to give different turtle commands to 
+different turtles, a lefthand argument will accept 
+turtle numbers or even turtle names (read on). 
+If a lefthand argument is provided, be careful 
+to provide the same number of righthand arg's.
+Because **createTurtle 0 0 0** returns an index 
+number for each turtle it creates, you can assign 
+a name to each turtle, to be used alternatively 
 to the turtle's number; for example,
 **Sweetpea=:createTurtle 0 5 0**.
 
