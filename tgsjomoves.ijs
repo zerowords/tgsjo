@@ -102,103 +102,53 @@ u=. s ((1&|.@:[ * _1&|.@:]) - _1&|.@:[ * 1&|.@:]) f
 M=. rPitch mp _3]\ s,  u,  (-f) 
 )
 
-normalize=: %length
-sm=: [
-diag =: (<0 1)&|:
-a21=:5 7&{@,
-a02=: 6 2&{@,
-a10=: 1 3&{@,
-lookAtMat=: monad define
-mat=. y
-sm trace=. +/diag mat
-if. trace > 0 do.
-smoutput 'positive',":s =: 0.5 % %: 1+trace
-sm q0 =: 0.25%s
-sm q1 =: s*-/a21 mat
-sm q2 =: s*-/a02 mat
-sm q3 =: s*-/a10 mat
-else. 
-if. (>/0 1{diag mat)*.>/0 2{diag mat do.
-   smoutput 'zerolarge',":s =: 2.0 * %: 1.0 + -`+/diag mat
-   sm q0 =: s%~-/a21 mat
-   sm q1 =: 0.25*s
-   sm q2 =: s%~+/a10 mat
-   sm q3 =: s%~+/a02 mat
-elseif. >/1 2{diag mat do.
-   smoutput '1>2',":s =: 2.0 * %: 1.0 + -`+/1 0 2{diag mat
-   sm q0 =: s%~-/a02 mat
-   sm q1 =: s%~+/a10 mat
-   sm q2 =: 0.25*s
-   sm q3 =: s%~+/a21 mat
-elseif. 1 do.
-   smoutput 'else',":s =: 2.0 * %: 1.0 +  -`+/2 0 1{diag mat
-   sm q0 =: s%~-/a10 mat
-   sm q1 =: s%~+/a02 mat
-   sm q2 =: s%~+/a21 mat
-   sm q3 =: 0.25*s
+lookAt=: verb define
+(i.#positions)lookAt y
+:
+result=. i. 0 3
+target=. y
+   R=: normalize"1 target,/@:(-"1"1 2) (x&{)positions
+   U=: normalize cross/"2 R,:"1 (0 0 1)
+   F=: cross/"2 U,:"1 R
+   mat=.i. 0 0 3
+   mat=. mat,R,"1 2 U,:"1 F
+for_i. x do. 
+result=. result,lookAt0 i_index{ mat 
 end.
-end.
-smoutput 'length: ',":length q0,q1,q2,q3
-smoutput 'q2euler: ',":2 rndm q2euler q0,q1,q2,q3
-q0,q1,q2,q3
 )
 
-normalize =: %length
-sm=: [
-lookAt=: monad define
-target=. y
-   sm R=: normalize target -&, positions
-   sm U=: normalize cross/ R,: 0 0 1
-   sm F=: cross/ U,:R
-   sm Trace=: (0{R),(1{U),2{F
+lookAt0 =: monad define
+'R U F'=. y
+   Trace=: (0{R),(1{U),2{F
    trace=. +/Trace
 if. trace > 0 do.
-smoutput 'positive: ',":s =: 0.5 % %: 1+trace
-sm q0 =: 0.25%s
-sm q1 =: s*(2{U)- 1{F
-sm q2 =: s*(0{F)- 2{R
-sm q3 =: s*(1{R)- 0{U
+s =: 0.5 % %: 1+trace
+q0 =: 0.25%s
+q1 =: s*(2{U)- 1{F
+q2 =: s*(0{F)- 2{R
+q3 =: s*(1{R)- 0{U
 else. 
 if. ((0{R)>1{U)*. (0{R)>2{F  do.
-   smoutput 'bigR: ',":s =: 2.0 * %: 1.0 + (0{R) - (1{U) + 2{F
-   sm q0 =: s%~(2{U)- 1{F
-   sm q1 =: 0.25*s
-   sm q2 =: s%~(0{U)+ 1{R
-   sm q3 =: s%~(0{F)+ 2{R
+   s =: 2.0 * %: 1.0 + (0{R) - (1{U) + 2{F
+   q0 =: s%~(2{U)- 1{F
+   q1 =: 0.25*s
+   q2 =: s%~(0{U)+ 1{R
+   q3 =: s%~(0{F)+ 2{R
 elseif. (1{U)>2{F do.
-   smoutput 'U>F: ',":s =: 2.0 * %: 1.0 + (1{U) - (0{R) + 2{F
-   sm q0 =: s%~(0{F)- 2{R
-   sm q1 =: s%~(0{U)+ 1{R
-   sm q2 =: 0.25*s
-   sm q3 =: s%~(1{F)+ 2{U
+   s =: 2.0 * %: 1.0 + (1{U) - (0{R) + 2{F
+   q0 =: s%~(0{F)- 2{R
+   q1 =: s%~(0{U)+ 1{R
+   q2 =: 0.25*s
+   q3 =: s%~(1{F)+ 2{U
 elseif. 1 do.
-   smoutput 'else: ',":s =: 2.0 * %: 1.0 + (2{F) - (0{R) + 1{U
-   sm q0 =: s%~(1{R)- 0{U
-   sm q1 =: s%~(0{F)+ 2{R
-   sm q2 =: s%~(1{F)+ 2{U
-   sm q3 =: 0.25*s
+   s =: 2.0 * %: 1.0 + (2{F) - (0{R) + 1{U
+   q0 =: s%~(1{R)- 0{U
+   q1 =: s%~(0{F)+ 2{R
+   q2 =: s%~(1{F)+ 2{U
+   q3 =: 0.25*s
 end.
 end.
-sm 'length: ',":length q0,q1,q2,q3
-smoutput 'q2euler: ',":2 rndm q2euler q0,q1,q2,q3
-q0,q1,q2,q3
-)
-
-
-runtest=: monad define
-clearscreen''
-createTurtle 0 0 0
-t=.y
-yw t
-pt _30
-smoutput '*******yw ',": t
-smoutput orientations
-fd 10
-target=. positions
-fd _10
-pt 30
-yw -t
-smoutput lookAt target
+2 rndm q2euler q0,q1,q2,q3
 )
 
 NB. some usage examples
