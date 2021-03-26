@@ -103,12 +103,14 @@ M=. rPitch mp _3]\ s,  u,  (-f)
 )
 
 normalize =: %length
+lfr =: $@] $ ,@[
+subtlfr=: lfr-]
 lookAt=: verb define
 (i.#positions)lookAt y
 :
 result=. i. 0 3
-target=. result,y
-   R=: normalize"1 target,/@:(-"1"1 2) result,(x&{)positions
+target=. y
+   R=: normalize"1 target subtlfr result,(x&{)positions
    U=: normalize cross/"2 R,:"1 (0 0 1)
    F=: cross/"2 U,:"1 R
    mat=.i. 0 0 3
