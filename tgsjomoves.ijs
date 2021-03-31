@@ -110,9 +110,9 @@ lookAt=: verb define
 :
 result=. i. 0 3
 target=. y
-   R=: normalize"1 target subtlfr result,(x&{)positions
-   U=: normalize cross/"2 R,:"1 (0 0 1)
-   F=: cross/"2 U,:"1 R
+   R=. normalize"1 target subtlfr result,(x&{)positions
+   U=. normalize cross/"2 R,:"1 (0 0 1)
+   F=. cross/"2 U,:"1 R
    mat=.i. 0 0 3
    mat=. mat,R,"1 2 U,:"1 F
 for_i. x do. 
@@ -122,33 +122,33 @@ end.
 
 lookAt0 =: monad define
 'R U F'=. y
-   Trace=: (0{R),(1{U),2{F
+   Trace=. (0{R),(1{U),2{F
    trace=. +/Trace
 if. trace > 0 do.
-s =: 0.5 % %: 1+trace
-q0 =: 0.25%s
-q1 =: s*(2{U)- 1{F
-q2 =: s*(0{F)- 2{R
-q3 =: s*(1{R)- 0{U
+s =. 0.5 % %: 1+trace
+q0 =. 0.25%s
+q1 =. s*(2{U)- 1{F
+q2 =. s*(0{F)- 2{R
+q3 =. s*(1{R)- 0{U
 else. 
 if. ((0{R)>1{U)*. (0{R)>2{F  do.
-   s =: 2.0 * %: 1.0 + (0{R) - (1{U) + 2{F
-   q0 =: s%~(2{U)- 1{F
-   q1 =: 0.25*s
-   q2 =: s%~(0{U)+ 1{R
-   q3 =: s%~(0{F)+ 2{R
+   s =. 2.0 * %: 1.0 + (0{R) - (1{U) + 2{F
+   q0 =. s%~(2{U)- 1{F
+   q1 =. 0.25*s
+   q2 =. s%~(0{U)+ 1{R
+   q3 =. s%~(0{F)+ 2{R
 elseif. (1{U)>2{F do.
-   s =: 2.0 * %: 1.0 + (1{U) - (0{R) + 2{F
-   q0 =: s%~(0{F)- 2{R
-   q1 =: s%~(0{U)+ 1{R
-   q2 =: 0.25*s
-   q3 =: s%~(1{F)+ 2{U
+   s =. 2.0 * %: 1.0 + (1{U) - (0{R) + 2{F
+   q0 =. s%~(0{F)- 2{R
+   q1 =. s%~(0{U)+ 1{R
+   q2 =. 0.25*s
+   q3 =. s%~(1{F)+ 2{U
 elseif. 1 do.
-   s =: 2.0 * %: 1.0 + (2{F) - (0{R) + 1{U
-   q0 =: s%~(1{R)- 0{U
-   q1 =: s%~(0{F)+ 2{R
-   q2 =: s%~(1{F)+ 2{U
-   q3 =: 0.25*s
+   s =. 2.0 * %: 1.0 + (2{F) - (0{R) + 1{U
+   q0 =. s%~(1{R)- 0{U
+   q1 =. s%~(0{F)+ 2{R
+   q2 =. s%~(1{F)+ 2{U
+   q3 =. 0.25*s
 end.
 end.
 2 rndm q2euler q0,q1,q2,q3
