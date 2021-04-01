@@ -154,6 +154,27 @@ end.
 2 rndm q2euler q0,q1,q2,q3
 )
 
-NB. some usage examples
-NB. lookAtMat 3 3{.(gl_Rotate 30 0 1 0) mp gl_Rotate _45 0 0 1
-NB. runtest"0] 45 _45 135 _135
+q2euleramb03=: q2euler : ((i.0 3),q2euler@:{)
+turnto=: verb define
+(i.#positions) turnto y
+:
+target=. y
+orient=. x q2euleramb03 orientations
+new=.|.|: orient
+new=. |.|:(x lookAt target)+orient
+x yw x{,0{new
+x pt x{,1{new
+x rl x{,2{new
+)
+
+NB. a usage example
+NB. to avoid the "slow" feature change locale here
+NB. cocurrent 'tgsjo'
+NB. createTurtle 0 0 0,:10 0 0
+NB. yw 90
+NB. turnto target=. 6.12372 6.12372 5,:16.12372 6.12372 5
+NB. positions
+NB. 2 rndm orientations
+NB. fd 10
+NB. positions
+
