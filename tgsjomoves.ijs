@@ -161,7 +161,10 @@ turnto=: verb define
 target=. y
 orient=. x q2euleramb03 orientations
 new=.|.|: orient
-new=. |.|:(x lookAt target)+orient
+x yw x{,0{new
+x pt x{,1{new
+x rl x{,2{new
+new=. |.|:(x lookAt target)
 x yw x{,0{new
 x pt x{,1{new
 x rl x{,2{new
