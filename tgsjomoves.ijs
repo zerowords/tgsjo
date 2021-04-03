@@ -151,7 +151,7 @@ elseif. 1 do.
    q3 =. 0.25*s
 end.
 end.
-2 rndm q2euler q0,q1,q2,q3
+q2euler q0,q1,q2,q3
 )
 
 q2euleramb03=: q2euler : ((i.0 3),q2euler@:{)
