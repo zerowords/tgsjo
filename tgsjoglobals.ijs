@@ -380,6 +380,35 @@ msec 400
 (i.2 4)dosido 4
 )
 
+Note'description'
+http://paulbourke.net/fractals/lorenz/
+
+dx / dt = lorenza (y - x)
+dy / dt = x (lorenzb - z) - y
+dz / dt = xy - lorenzc z
+
+One commonly used set of constants is lorenza = 10, lorenzb = 28, lorenzc = 8 / 3. 
+Another is a = 28, b = 46.92, c = 4. 
+"a" is sometimes known as the Prandtl number and "b" the Rayleigh number.
+)
+
+lorenz=: monad define
+'X Y Z' =. |: p=. y
+dx =. lorenza*Y-X
+dy =. Y-~X*(lorenzb-Z)
+dz =. -/ (X*Y),:lorenzc*Z
+turnto p+d=. |:dt%~dx,dy,:dz
+fd length d
+positions
+)
+lorenza=: 10
+lorenzb=: 28
+lorenzc=: 8%3
+dt=: 100
+
+NB. run with commands like the following
+NB. lorenz_tgsjo_^:50[positions
+NB. 50 repeats do 'lorenz_tgsjo_ positions' 
 
 
 commands =: 0 : 0
