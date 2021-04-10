@@ -65,42 +65,6 @@ jr=: jumpright=: jl rev
 bk=: back=: fd rev
 jd=: jumpdown=: ju rev
 
-NB. Below are experimental only
-I=: # inv
-darctan=:dfr@arctan@%
-NB. m is 0 1 or 2 for xy or z marking the axis 
-NB.     orthogonal to the plane that turtle will turn in
-NB. This untesed adverb works only for direction
-NB.    changes within a single plane at a time
-NB.    So for example looking at 111 from 000
-NB.    has to me done it 2 steps. Eg first 
-NB.    looking toward 110 and then 
-NB.    looking toward 111 from there.
-NB. But for the second towards is tricky because 
-NB.    it must be done in an axis plane, too.
-NB. The result is a new heading for the turtle,
-NB.    not the amount it must turn
-towards=: adverb define
-(i.#positions)m towards y
-:
-ind=. m-.~i. 3
-dist=.y-&(ind&{)"1 (,x){positions
-((180+darctan~)`(90**@])`(darctan~)@.(1&+@*@[))/"1 dist
-)
-
-NB. this is an untested variation on glu_LookAt 
-NB. the big difference is rPitch in the last line
-rPitch =: 2 rndm 3 3{.gl_Rotate 90 0 1 0
-lookat=: 3 : 0"1
-position=. y
-up =. 0 1 0
-F=. position -~ ,positions
-f=. (% +/&.:*:)F
-UPP=. (% +/&.:*:),up
-s=. f ((1&|.@:[ * _1&|.@:]) - _1&|.@:[ * 1&|.@:]) UPP
-u=. s ((1&|.@:[ * _1&|.@:]) - _1&|.@:[ * 1&|.@:]) f
-M=. rPitch mp _3]\ s,  u,  (-f) 
-)
 
 normalize =: %length
 lfr =: $@] $ ,@[
