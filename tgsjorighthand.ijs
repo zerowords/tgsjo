@@ -1,4 +1,5 @@
 NB. tgsjo.ijs NB. 9/21/20 
+NB. tgsjo.ijs NB. 4/10/21 
 
 cocurrent 'tgsjo'
 require 'gl2 gles ~addons/ide/qt/opengl.ijs'
@@ -53,9 +54,13 @@ catch.end.sprog=: GO=: 0
 )
 
 
+NB. minwh 600 600 below controls the pixel width and height 
+NB. of the graphics window.
+NB. minwh 400 400 is about right for a small window for 
+NB. stereo viewing in a cardboard size viewer
 TGSO=: 0 : 0
 pc tgsj;
-minwh 600 600; pmove 500 500 _1 _1;cc g opengl flush;
+minwh 360 600; pmove 500 500 _1 _1;cc g opengl flush;
 rem form end;
 )
 
@@ -316,12 +321,25 @@ end.
 )
 
 ff =: [,~-@],],-@],]
+ffadj=: 6&{.@,~@[+]
 frustum=: 1 100 ff 0.3  NB. matches closely with gl_Perspective 30,(),1 10
+NB. positive stereodev produces parallel stereo views,
+NB. negative stereodev produces cross eyed views
+NB. stereodev about 0.1 is suggested
+NB. 
+stereodev=: 0
+NB. stereodev=: _0.1
+NB. next 2 not used so that frustuml/r are updated whenever stereodev is, below
+frustuml=: frustum ffadj~   stereodev
+frustumr=: frustum ffadj~ - stereodev
 
 paint_handler=: 3 : 0
 if. 0=sprog do. return. end.
 
-wh=. gl_qwh''
+viewport=. 0 0,wh=. gl_qwh''
+viewportl=. 0 160,-:wh
+viewportr=. (-:0{wh), 160,-:wh
+
 er glClearColor Bcolor
 er glClear GL_COLOR_BUFFER_BIT + GL_DEPTH_BUFFER_BIT
 
@@ -335,16 +353,29 @@ NB. note pre-multiplication
 NB. model-view
 mvp=: (mp/gl_Rotate"1 (,.=@i.@#)R) mp (gl_Scale STEPS%2000) mp (gl_Translate T) mp glu_LookAt EYE,LR,UD,IO,UP
 
+if. stereodev=0 do.
 NB. projection
 NB. mvp=: mvp mp gl_Perspective 30, (%/wh),1 10
-mvp=: mvp mp gl_Frustum frustum
+MVP=. ,:mvp mp gl_Frustum frustum
+VP=. ,:viewport
+else.
+mvpl=. mvp mp gl_Frustum frustum ffadj~   stereodev
+mvpr=. mvp mp gl_Frustum frustum ffadj~ - stereodev
+MVP=.mvpl,:mvpr
+VP=.viewportl,:viewportr
+end.
+
 er glDepthFunc GL_GREATER NB. Frustum needs this
 er glDepthRange 1 0
 er glClearDepth 0
 er glClear GL_DEPTH_BUFFER_BIT
 
+vp=. 0
+for. MVP do.
 NB. note GL_FALSE, no transpose
-er glUniformMatrix4fv mvpUni; 1; GL_FALSE; mvp
+er glUniformMatrix4fv mvpUni; 1; GL_FALSE; MVP
+er glViewport vp{<.VP
+vp=. 1
 
 paint_vertex_buffers vertexpaint
 
@@ -355,6 +386,7 @@ paint_line_buffers linepaint
 try. if. #lineData do. er glDrawArrays GL_LINES; 0; 3%~#lineData end.
 catch. 1 end.
 
+end.
 er glDisable GL_DEPTH_TEST
 
 er glUseProgram 0
