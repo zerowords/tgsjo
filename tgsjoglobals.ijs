@@ -360,17 +360,17 @@ end.
 )
 
 Note 'dosido setup'
-LHip_tgsjo_=: %&5 LHip_tgsjo_
-RHip_tgsjo_=: %&5 RHip_tgsjo_
-Butt_tgsjo_=: %&5 Butt_tgsjo_
-Face_tgsjo_=: %&5 Face_tgsjo_
-NB. Coordinates_tgsjo_=: %&5 Coordinates_tgsjo_
+LHip_tgsjo_=: %&15 LHip_tgsjo_
+RHip_tgsjo_=: %&15 RHip_tgsjo_
+Butt_tgsjo_=: %&15 Butt_tgsjo_
+Face_tgsjo_=: %&15 Face_tgsjo_
+NB. Coordinates_tgsjo_=: %&15 Coordinates_tgsjo_
 
 rotR 45  0 0 
 translate _0.5 0 _3
 clearscreen''
-'lead0 follow0 lead1 follow1' =: createTurtle 0 0 0,0 _10 0,10 _10 0,:10 0 0
-'lead2 follow2 lead3 follow3' =: createTurtle 20 0 0,20 _10 0,30 _10 0,:30 0 0
+'lead0 follow0 lead1 follow1' =: createTurtle _15 0 0,_15 _10 0,_5 _10 0,:_5 0 0
+'lead2 follow2 lead3 follow3' =: createTurtle 25 0 0,25 _10 0,35 _10 0,:35 0 0
 (lead1,follow1,lead3,follow3)rt 180
 (".&>'follow' nl 0) penColor Yellow
 (".&>'follow' nl 0) turtleEyeColor Yellow
