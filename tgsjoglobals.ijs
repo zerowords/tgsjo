@@ -416,7 +416,7 @@ NB. repeat or even increase 50
 
 NB. run 2
 cs''
-stereodev_tgsjo_=:_0.15
+stereodev_tgsjo_=:_0.1
 createTurtle _8 _4 0
 lorenz_tgsjo_^:50[positions
 NB. repeat or even increase 50
