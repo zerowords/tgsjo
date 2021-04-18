@@ -406,13 +406,32 @@ lorenzb=: 28
 lorenzc=: 8%3
 dt=: 100
 
-NB. run with commands like the following
-NB. createTurtle 0.1 0 0
-NB. lorenz_tgsjo_^:50[positions
-NB. 50 repeats do 'lorenz_tgsjo_ positions' 
-NB. cs''
-NB. stereodev_tgsjo_=:_0.1
-NB. createTurtle _4 _4 0
+Note 'run lorenz with commands like the following'
+NB. run 1
+createTurtle 0.1 0 0
+translate 0 0 _15
+lorenz_tgsjo_^:50[positions
+NB. or: 50 repeats do 'lorenz_tgsjo_ positions'
+NB. repeat or even increase 50
+
+NB. run 2
+cs''
+stereodev_tgsjo_=:_0.15
+createTurtle _8 _4 0
+lorenz_tgsjo_^:50[positions
+NB. repeat or even increase 50
+)
+
+Note 'views for lorenz'
+x
+|-y     rotR 180 0 90
+
+z
+|-x     rotR 90 0 0
+
+z
+|-y     rotR 0 90 _90
+)
 
 commands =: 0 : 0
 
