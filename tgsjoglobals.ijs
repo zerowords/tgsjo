@@ -414,12 +414,13 @@ lorenz_tgsjo_^:50[positions
 NB. or: 50 repeats do 'lorenz_tgsjo_ positions'
 NB. repeat or even increase 50
 
-NB. run 2
+NB. run 2 (drag the screen as wide as possible)
 cs''
 stereodev_tgsjo_=:_0.1
-createTurtle _8 _4 0
-lorenz_tgsjo_^:50[positions
-NB. repeat or even increase 50
+translate _1 0 _9
+createTurtle _4 _4 0
+lorenz_tgsjo_^:500[positions
+NB. click F4 on the graphics pane
 )
 
 Note 'views for lorenz'
