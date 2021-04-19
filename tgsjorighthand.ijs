@@ -336,9 +336,9 @@ frustumr=: frustum ffadj~ - stereodev
 paint_handler=: 3 : 0
 if. 0=sprog do. return. end.
 
-viewport=. _20 0,wh=. gl_qwh''
-viewportl=. _20 160,-:wh
-viewportr=. (-:0{wh), 160,-:wh
+viewport=. 0 0,wh=. gl_qwh''
+viewportl=. 0 180,-:wh
+viewportr=. (-:0{wh), 180,-:wh
 
 er glClearColor Bcolor
 er glClear GL_COLOR_BUFFER_BIT + GL_DEPTH_BUFFER_BIT
