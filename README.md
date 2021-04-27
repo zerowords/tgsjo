@@ -17,6 +17,11 @@ The turtle pens are colored by the user with the `penColor` command.
 The pen colors are retained in the 'penColors' noun.
 Other commands and attributes are retained using a similar naming pattern.
 ```
+```
+This is a revised version which reverses turn directions for yaw, pitch, and roll.
+The original version can be found in the branch "version1".
+This version also enables side-by-side stereo views with the verb stereo.
+```
 
 ## Setup
 To install tgsjo enter the **indented** lines in jconsole or jqt.
