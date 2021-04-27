@@ -29,12 +29,12 @@ Vertices=: 0 2 1,1 2 3,3 2 0,:0 1 3
 LHip=: _9  4 0
 RHip=: _9 _4 0
 Butt=: _4  0 5
-Face=:  0  0 0
+Nose=:  0  0 0
 end.
 
 turtleColors=:turtleColors0=:1 4 3 3{.turtleColors
 turtleEyeColors=:turtleEyeColors0=:1 2 3 3{.turtleEyeColors
-Coordinates=: %&0.8 LHip,RHip,Butt,:Face
+Coordinates=: %&0.8 LHip,RHip,Butt,:Nose
 turtleTriangles0=: turtleTriangles=:  ,: Vertices { Coordinates
 turtleEyeTriangles0=: turtleEyeTriangles=: 0.8 interpolate"2 ]1 2{"3 turtleTriangles
 
