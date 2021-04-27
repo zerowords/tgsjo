@@ -40,6 +40,11 @@ smoutput 'MS_tgsjo_ was: ', ":MS_tgsjo_
 MS_tgsjo_=: +|y
 )
 
+stereo=: 3 : 0
+smoutput 'stereodev_tgsjo_ was: ', ":stereodev_tgsjo_
+stereodev_tgsjo_=: y
+)
+
 rotR=: 3 : 0
 smoutput 'R_tgsjo_ was: ', ":R_tgsjo_
 if. y-:'' do. y =. R0_tgsjo_ end.
@@ -360,17 +365,17 @@ end.
 )
 
 Note 'dosido setup'
-LHip_tgsjo_=: %&5 LHip_tgsjo_
-RHip_tgsjo_=: %&5 RHip_tgsjo_
-Butt_tgsjo_=: %&5 Butt_tgsjo_
-Face_tgsjo_=: %&5 Face_tgsjo_
-NB. Coordinates_tgsjo_=: %&5 Coordinates_tgsjo_
+LHip_tgsjo_=: %&15 LHip_tgsjo_
+RHip_tgsjo_=: %&15 RHip_tgsjo_
+Butt_tgsjo_=: %&15 Butt_tgsjo_
+Nose_tgsjo_=: %&15 Nose_tgsjo_
+NB. Coordinates_tgsjo_=: %&15 Coordinates_tgsjo_
 
 rotR 45  0 0 
 translate _0.5 0 _3
 clearscreen''
-'lead0 follow0 lead1 follow1' =: createTurtle 0 0 0,0 _10 0,10 _10 0,:10 0 0
-'lead2 follow2 lead3 follow3' =: createTurtle 20 0 0,20 _10 0,30 _10 0,:30 0 0
+'lead0 follow0 lead1 follow1' =: createTurtle _15 0 0,_15 _10 0,_5 _10 0,:_5 0 0
+'lead2 follow2 lead3 follow3' =: createTurtle 25 0 0,25 _10 0,35 _10 0,:35 0 0
 (lead1,follow1,lead3,follow3)rt 180
 (".&>'follow' nl 0) penColor Yellow
 (".&>'follow' nl 0) turtleEyeColor Yellow
@@ -380,34 +385,89 @@ msec 400
 (i.2 4)dosido 4
 )
 
+Note'description'
+http://paulbourke.net/fractals/lorenz/
 
+dx / dt = lorenza (y - x)
+dy / dt = x (lorenzb - z) - y
+dz / dt = xy - lorenzc z
+
+One commonly used set of constants is lorenza = 10, lorenzb = 28, lorenzc = 8 / 3. 
+Another is a = 28, b = 46.92, c = 4. 
+"a" is sometimes known as the Prandtl number and "b" the Rayleigh number.
+)
+
+lorenz=: monad define
+'X Y Z' =. |: p=. y
+dx =. lorenza*Y-X
+dy =. Y-~X*(lorenzb-Z)
+dz =. -/ (X*Y),:lorenzc*Z
+turnto p+d=. |:dt%~dx,dy,:dz
+fd length d
+positions
+)
+lorenza=: 10
+lorenzb=: 28
+lorenzc=: 8%3
+dt=: 100
+
+Note 'run lorenz with commands like the following'
+NB. run 1
+createTurtle 0.1 0 0
+translate 0 0 _15
+lorenz_tgsjo_^:50[positions
+NB. or: 50 repeats do 'lorenz_tgsjo_ positions'
+NB. repeat or even increase 50
+
+NB. run 2 (drag the screen as wide as possible)
+cs''
+stereodev_tgsjo_=:_0.1
+translate _1 0 _9
+createTurtle _4 _4 0
+lorenz_tgsjo_^:500[positions
+NB. click F4 on the graphics pane
+)
+
+Note 'views for lorenz'
+x
+|-y     rotR 180 0 90
+
+z
+|-x     rotR 90 0 0
+
+z
+|-y     rotR 0 90 _90
+)
 
 commands =: 0 : 0
 
 key turtle commands              ***************
 x args are turtle number(s) or '' for all turtles
 y args are suggested below in parentheses
-yw:    yaw turtle(s) clockwise (degrees)
-rl:    roll turtle(s) right side upward (degrees)
-pt:    pitch turtle(s) nose upward (degrees)
-fd:    move turtle(s) forward (steps)
-bk:    move turtle(s) backward (steps)
-ju:    jump turtle(s) upward (steps)
-jr:    jump turtle(s) rightward (steps)
-pen:   penState(s) (up is 0, down 1)
-penColor:    penColor(s) (colorname or 3 fractions)
-turtleColor: turtleColor(s) (4 colors shape 4 3)
-turtleTriangle: turtleTriangle(s) (4 coordinates shape 4 3)
+yw:     yaw turtle(s) clockwise (degrees)
+rl:     roll turtle(s) right side upward (degrees)
+pt:     pitch turtle(s) nose upward (degrees)
+fd:     move turtle(s) forward (steps)
+bk:     move turtle(s) backward (steps)
+ju:     jump turtle(s) upward (steps)
+jr:     jump turtle(s) rightward (steps)
+turnto: turn turtle(s) toward (3 coordintates)
+createTurtle:  (3 coordinates)  [x arg quaternion]
+pen:           penState(s) (up is 0, down 1)
+penColor:      penColor(s) (colorname or 3 fractions)
+turtleColor:   turtleColor(s) (4 colors shape 4 3)
+turtleTriangle:turtleTriangle(s) (4 coordinates shape 4 3)
+               [(LHip,RHip,Butt,:Nose facing east)]
 
+following have no x arguments
+clearscreen: ('')
+clearlines:  ('')
+msec:        slow movements in millisecs (0 is default)
+translate:   translate Eye (0 0 _19 is default)
+rotR:        rotate Eye (20 30 0 is default)
+bgcolor:     background color (colorname or 3 fractions)
+stereo:      dev  (negative=X;0=2D;positive=||)
 for available colornames try: '='taketo"1 COLORTABLE
-
-createTurtle: (3 coordinates)  [x arg quaternion]
-clearscreen:  ('')  [no y arg]
-clearlines:   ('')  [no y arg]
-msec:         slow movements in millisecs (0)
-translate:    translate Eye (0 0 _19 is default)
-rotR:         rotate Eye (20 30 0 is default)
-bgcolor:      background color (colorname or 3 fractions)
 )
 
 examples =: 0 : 0
