@@ -1,4 +1,5 @@
 NB. tgsjo.ijs NB. 9/21/20 
+NB. tgsjo.ijs NB. 4/10/21 
 
 cocurrent 'tgsjo'
 require 'gl2 gles ~addons/ide/qt/opengl.ijs'
@@ -53,9 +54,13 @@ catch.end.sprog=: GO=: 0
 )
 
 
+NB. minwh 600 600 below controls the pixel width and height 
+NB. of the graphics window.
+NB. minwh 400 400 is about right for a small window for 
+NB. stereo viewing in a cardboard size viewer
 TGSO=: 0 : 0
 pc tgsj;
-minwh 600 600; pmove 500 500 _1 _1;cc g opengl flush;
+minwh 360 360; pmove 500 0 600 600;cc g opengl flush;
 rem form end;
 )
 
@@ -74,7 +79,7 @@ You can create more turtles using the createTurtle
 command. For example createTurtle 5 5 0 puts a turtle 
 at x,y,z = 5,5,0. 
 
-Turn turtles with commands like yaw (right), left, 
+Turn turtles with commands like yaw (left), right, 
 pitch, roll followed by degree amounts. Each of these 
 commands have abbreviations.
 
@@ -316,12 +321,25 @@ end.
 )
 
 ff =: [,~-@],],-@],]
+ffadj=: 6&{.@,~@[+]
 frustum=: 1 100 ff 0.3  NB. matches closely with gl_Perspective 30,(),1 10
+NB. positive stereodev produces parallel stereo views,
+NB. negative stereodev produces cross eyed views
+NB. stereodev about 0.1 is suggested
+NB. 
+stereodev=: 0
+NB. stereodev=: _0.1
+NB. next 2 not used so that frustuml/r are updated whenever stereodev is, below
+frustuml=: frustum ffadj~   stereodev
+frustumr=: frustum ffadj~ - stereodev
 
 paint_handler=: 3 : 0
 if. 0=sprog do. return. end.
 
-wh=. gl_qwh''
+viewport=. 0 0,wh=. gl_qwh''
+viewportl=. 0 180,-:wh
+viewportr=. (-:0{wh), 180,-:wh
+
 er glClearColor Bcolor
 er glClear GL_COLOR_BUFFER_BIT + GL_DEPTH_BUFFER_BIT
 
@@ -335,16 +353,29 @@ NB. note pre-multiplication
 NB. model-view
 mvp=: (mp/gl_Rotate"1 (,.=@i.@#)R) mp (gl_Scale STEPS%2000) mp (gl_Translate T) mp glu_LookAt EYE,LR,UD,IO,UP
 
+if. stereodev=0 do.
 NB. projection
 NB. mvp=: mvp mp gl_Perspective 30, (%/wh),1 10
-mvp=: mvp mp gl_Frustum frustum
+MVP=. ,:mvp mp gl_Frustum frustum
+VP=. ,:viewport
+else.
+mvpl=. mvp mp gl_Frustum frustum ffadj~   stereodev
+mvpr=. mvp mp gl_Frustum frustum ffadj~ - stereodev
+MVP=.mvpl,:mvpr
+VP=.viewportl,:viewportr
+end.
+
 er glDepthFunc GL_GREATER NB. Frustum needs this
 er glDepthRange 1 0
 er glClearDepth 0
 er glClear GL_DEPTH_BUFFER_BIT
 
+vp=. 0
+for. MVP do.
 NB. note GL_FALSE, no transpose
-er glUniformMatrix4fv mvpUni; 1; GL_FALSE; mvp
+er glUniformMatrix4fv mvpUni; 1; GL_FALSE; MVP
+er glViewport vp{<.VP
+vp=. 1
 
 paint_vertex_buffers vertexpaint
 
@@ -355,6 +386,7 @@ paint_line_buffers linepaint
 try. if. #lineData do. er glDrawArrays GL_LINES; 0; 3%~#lineData end.
 catch. 1 end.
 
+end.
 er glDisable GL_DEPTH_TEST
 
 er glUseProgram 0
@@ -441,12 +473,14 @@ R22=.+/1 _1 _1 1*q2
 R00`R01`R02,R10`R11`R12,:R20`R21`R22
 )
 
+atan2 =: 12 o. j. 
 q2euler=:3 :0"1
-phi=. _3 o. 2*(+/*/(0 2,:1 3){ y) % 1 - 2 * +/*: 1 2 { y
+phi=. ( 2*(+/*/(0 2,:1 3){ y)) atan2~ 1 - 2 * +/*: 1 2 { y
 tht=. _1 o. 2* -/*/(0 3,:2 1){ y
-psi=. _3 o. 2*(+/*/(0 1,:2 3){ y) % 1 - 2 * +/*: 2 3 { y
+psi=. (2*(+/*/(0 1,:3 2){ y)) atan2~ 1 - 2 * +/*: 2 3 { y
 180p_1*phi,tht,psi
 )
+
 
 NB. x is a direction vector
 NB. y is a rotation quaternion
