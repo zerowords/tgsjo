@@ -455,8 +455,10 @@ penColorA''
 penStateA''
 renderTurtles''
 if. -. dpiSignal do. 
+    smoutput '***************************************************'
     smoutput 'If your turtles are mispositioned try entering the '
     smoutput ' command:  dpi 2 '
+    smoutput '***************************************************'
 else.
 dpiSignal_tgsjo_=: >: dpiSignal_tgsjo_
 end.
