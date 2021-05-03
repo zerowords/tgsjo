@@ -333,10 +333,19 @@ NB. next 2 not used so that frustuml/r are updated whenever stereodev is, below
 frustuml=: frustum ffadj~   stereodev
 frustumr=: frustum ffadj~ - stereodev
 
+dpiSignal=: 0
+dpiLevel=: 1
+dpi=: 3 : 0
+smoutput 'dpiLevel_tgsjo_ was: ', ":dpiLevel_tgsjo_
+dpiLevel_tgsjo_=: +|y
+)
+
+
+
 paint_handler=: 3 : 0
 if. 0=sprog do. return. end.
 
-viewport=. 0 0,wh=. gl_qwh''
+viewport=. 0 0,wh=. dpiLevel*gl_qwh''
 viewportl=. 0 180,-:wh
 viewportr=. (-:0{wh), 180,-:wh
 
@@ -445,6 +454,12 @@ orientations=: orientations, x
 penColorA''
 penStateA''
 renderTurtles''
+if. -. dpiSignal do. 
+    smoutput 'If your turtles are mispositioned try entering the '
+    smoutput ' command:  dpi 2 '
+else.
+dpiSignal_tgsjo_=: >: dpiSignal_tgsjo_
+end.
 r
 )
 
