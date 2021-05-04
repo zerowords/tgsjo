@@ -338,9 +338,8 @@ dpiLevel=: 1
 dpi=: 3 : 0
 smoutput 'dpiLevel_tgsjo_ was: ', ":dpiLevel_tgsjo_
 dpiLevel_tgsjo_=: +|y
+fd 0
 )
-
-
 
 paint_handler=: 3 : 0
 if. 0=sprog do. return. end.
@@ -456,10 +455,10 @@ penStateA''
 renderTurtles''
 if. -. dpiSignal do. 
     smoutput '***************************************************'
-    smoutput 'If your turtles are mispositioned try entering the '
-    smoutput ' command:  dpi 2 '
+    smoutput 'If turtle positions are restricted to the bottom '
+    smoutput 'left quadrant of the screen (by a "Retina display") '
+    smoutput 'try entering the command:  dpi 2 '
     smoutput '***************************************************'
-else.
 dpiSignal_tgsjo_=: >: dpiSignal_tgsjo_
 end.
 r
