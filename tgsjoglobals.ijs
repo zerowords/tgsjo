@@ -467,7 +467,7 @@ translate:   translate Eye (0 0 _19 is default)
 rotR:        rotate Eye (20 30 0 is default)
 bgcolor:     background color (colorname or 3 fractions)
 stereo:      dev  (negative=X;0=2D;positive=||)
-for available colornames try: '='taketo"1 COLORTABLE
+for available colornames try: list'='taketo"1 COLORTABLE
 )
 
 examples =: 0 : 0
