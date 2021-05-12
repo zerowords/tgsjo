@@ -204,6 +204,7 @@ for. i. x do.
 end.
 )
 
+NB. forward 0[turtleScale_tgsjo_=:0 can make turtles invisible
 NB. https://en.wikipedia.org/wiki/Gosper_curve
 NB. 4 gl 50
 NB. be careful not to make x bigger than 4
@@ -281,8 +282,11 @@ if. st = 0 do.
 end.
 )
 
+NB. forward 0[turtleScale_tgsjo_=:0 can make turtles invisible
 NB. https://www.win.tue.nl/~wstomv/publications/3d-turtle-geometry-reduced-unstyled.pdf
 NB. https://www.win.tue.nl/~wstomv/talks/3d-turtle-geometry-talk-4up-reduced.pdf
+NB. createTurtle 0 0 0[clearscreen''
+NB. (3 repeats Spiralosaurus 5)
 segment=: verb define"1
 (i.#positions)segment y
 :
@@ -294,14 +298,53 @@ x yw ywa
 Td=: ([: segment 0 90,~]) :([segment 0 90,~])
 Rd=: ([: segment 90 90,~]) :([segment 90 90,~])
 Pd=: ([: segment 180 90,~]) :([segment 180 90,~])
-Ld=: ([: segment 270 90,~]) :([segment 270 90,~])
-Spiralosaurus=: 3 : 0
-2 repeats Td 5*4
-2 repeats Ld 5*9
-2 repeats Td 5*4
-6 repeats Rd 5*3
+Ld=: ([: segment _90 90,~]) :([segment _90 90,~])
+Spiralosaurus_base_=: Spiralosaurus=: 3 : 0
+2 repeats Td y*4
+2 repeats Ld y*9
+2 repeats Td y*4
+6 repeats Rd y*3
+)
+NB. createTurtle 0 0 0[clearscreen''
+NB. (3 repeats Braidwork 5)
+Braidwork_base_=: Braidwork=: 3 : 0
+Ld 1*y
+Rd 5*y
+2 repeats Rd 6*y
+Ld 3*y
+Rd 1*y
+Ld 5*y
+2 repeats Ld 6*y
+Rd 3*y
 )
 
+NB. 4 BPoly"0 ]BPy[penColor White
+NB. pen 1[jumpup 1[pen 0
+NB. 4 BPoly"0 ]6|.BPy[penColor Blue
+NB. pen 1[jumpdown 2[pen 0
+NB. 4 BPoly"0 ]_6|.BPy[penColor Yellow
+BPoly_base_=: BPoly=: ((Rd@[)`(Pd@[)`(Ld@[))@.]
+BPy=: 0 1 2 1 0 2 1 1 0 1 1 2 0 1 2 1 0 2
+
+NB. see redo using BPoly above
+BorromeanPolylink_base_=: BorromeanPolylink=: 3 : 0
+Rd y*3 
+Pd y*3 
+Ld y*3 
+Pd y*3 
+Rd y*3 
+Ld y*3 
+2 repeats Pd y*3
+Rd y*3 
+2 repeats Pd y*3
+Ld y*3 
+Rd y*3 
+Pd y*3 
+Ld y*3 
+Pd y*3 
+Rd y*3 
+Ld y*3
+)
 
 rnd=: <.@(0.5&+)
 HSqrt3=: 2%~%:3
