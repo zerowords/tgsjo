@@ -540,7 +540,7 @@ for_turtle.i.#positions do.
     (turtle{turtleEyeColors) 'eyerender'addTriangle"_1 ((turtle{positions)+"1 (turtle{turtleEyeTriangles)+/ .* turtle{facing)+"1"3 2 fudge
 end.
 try. 
-    renderLines=: turtleScale*_3]\lineData
+    renderLines=: _3]\lineData   NB. removed turtleScale* prefix 5/12/21
     renderLcolors=: _3]\lcolorData
 catch. end.
 if. initialized do.
