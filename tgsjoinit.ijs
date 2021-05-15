@@ -23,7 +23,6 @@ turtleColors0=:turtleColors
 turtleEyeColors=:,: vrtxfface Black,:Black
 turtleEyeColors0=:turtleEyeColors
 
-turtleScale=:1
 queue=:''           NB. associated with conjunction repeatsNO
 Vertices=: 0 2 1,1 2 3,3 2 0,:0 1 3
 LHip=: _9  4 0
@@ -51,6 +50,10 @@ orientations=: i.0 4
 penColors=: i. 0 3              NB. specimen
 penColors0=: White              NB. default
 penColorA=: 3 : 'penColors=: penColors,penColors0 ' NB. append-1 verb
+
+turtleScales=: i. 0                NB. specimen
+turtleScales0=: 1                  NB. default
+turtleScaleA=: 3 : 'turtleScales=: turtleScales,turtleScales0 ' NB. append-1 verb
 
 penStates=: i. 0                NB. specimen
 penStates0=: 1                  NB. default
