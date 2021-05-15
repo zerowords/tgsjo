@@ -15,6 +15,7 @@ translate=: translate_tgsjo_
 renderTurtles=: renderTurtles_tgsjo_
 lorenz=: lorenz_tgsjo_
 turnto=: turnto_tgsjo_
+turtleScale=: turtleScale_tgsjo_
 
 NB. below are commented to make Slow work
 NB. and they are added to the bottom of tgsjoslow.ijs
