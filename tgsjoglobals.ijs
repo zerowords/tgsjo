@@ -88,8 +88,16 @@ y turtleColor~ i.#positions
 assert.  ({:@$turtleColors)-:{:@$y
 assert.  ({.@$turtleColors)*./@:>,x
 turtleColors=: turtleColors x}~vrtxfface y
-yw 0
+x yw 0
 empty''
+)
+
+turtleScale=: verb define         NB. edit verb
+y turtleScale~ i.#positions
+:
+assert.  (#turtleScales)*./@:>,x
+turtleScales=: y x}turtleScales
+x yw 0
 )
 
 turtleEyeColor=: verb define         NB. edit verb
@@ -499,6 +507,7 @@ createTurtle:  (3 coordinates)  [x arg quaternion]
 pen:           penState(s) (up is 0, down 1)
 penColor:      penColor(s) (colorname or 3 fractions)
 turtleColor:   turtleColor(s) (4 colors shape 4 3)
+turtleScale:   turtleScale(s) (0 is invisible, 1 default)
 turtleTriangle:turtleTriangle(s) (4 coordinates shape 4 3)
                [(LHip,RHip,Butt,:Nose facing east)]
 
