@@ -452,6 +452,7 @@ positions=:positions, y
 orientations=: orientations, x
 penColorA''
 penStateA''
+turtleScaleA''
 renderTurtles''
 if. -. dpiSignal do. 
     smoutput '***************************************************'
@@ -513,17 +514,17 @@ NB. add a triangle to the scene in the frame of reference of a turtle
 addTriangle=:1 :0
 :
 assert. 3 3-:$y assert. 3-:{:$x
-if. 3>#~.y do. 
-    echo 'ignoring degenerate triangle'
-    echo y
-    return.
-end.
+NB. if. 3>#~.y do. 
+NB.     echo 'ignoring degenerate triangle'
+NB.     echo y
+NB.     return.
+NB. end.
 c=. m,'Colors'
 o=. m,'Normals'
 t=. m,'Triangles'
 ca=. (c)=: (".c),($y)$,x
 oa=. (o)=: (".o),(% +/&.:*:"1) (cross"1 (1&|.)) (- 2&|.) y
-ta=. (t)=: (".t),turtleScale*y
+ta=. (t)=: (".t),y
 assert. 3 3 -: }.$ca
 assert. 3 3 -: }.$oa
 assert. 3 3 -: }.$ta
@@ -535,9 +536,10 @@ eyerenderColors=: renderColors=: sceneColors
 eyerenderTriangles=: renderTriangles=: sceneTriangles
 eyerenderNormals=: renderNormals=: sceneNormals
 for_turtle.i.#positions do.
-    (turtle{turtleColors) 'render'addTriangle"_1 (turtle{positions)+"1 (turtle{turtleTriangles)+/ .* turtle{facing
+    turtlescale=. turtle{turtleScales
+    (turtle{turtleColors) 'render'addTriangle"_1 (turtle{positions)+"1 (turtlescale*turtle{turtleTriangles)+/ .* turtle{facing
     fudge=. _0.1 0.1 *"0 1]0 1 0 rot2dir"1 turtle{orientations  NB. based on pretend jumpleft
-    (turtle{turtleEyeColors) 'eyerender'addTriangle"_1 ((turtle{positions)+"1 (turtle{turtleEyeTriangles)+/ .* turtle{facing)+"1"3 2 fudge
+    (turtle{turtleEyeColors) 'eyerender'addTriangle"_1 ((turtle{positions)+"1 (turtlescale*turtle{turtleEyeTriangles)+/ .* turtle{facing)+"1"3 2 fudge
 end.
 try. 
     renderLines=: _3]\lineData   NB. removed turtleScale* prefix 5/12/21
