@@ -14,6 +14,7 @@ FOLDER=: 'zerowords/tgsjo'
 
 FILES=: 0 : 0
 tgsjo.ijs
+tgsjo.ijt
 tgsjoalias.ijs
 tgsjoglobals.ijs
 tgsjoinit.ijs
