@@ -576,7 +576,7 @@ NB. also try 72 60 135 108 with poly
 ct 0 0 0[cs'' 
 msec 0   NB. 0 milliseconds to speed up
 NB. helix? 
-10 poly3 30
+5 poly3 30
 
 ct 0 0 0[cs'' 
 rotR''
