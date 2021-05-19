@@ -1,0 +1,310 @@
+LABTITLE=: 'Turtle graphics system J with modern openGL'
+LABAUTHOR=: 'Brian Schott'
+
+NB. =========================================================
+Lab Section Getting started
+
+This Lab is a little different: you must manually execute 
+each command by clicking on it and then returning twice.
+An alternative in most cases is to select a group of 
+commands and the Edit|Copy them. Then F8 will execute 
+all of them. But this may not always work. And by 
+doing so you may miss transitions that are instructive.
+
+     install'github:zerowords/tgsjo' NB. required only once 
+     load'zerowords/tgsjo'  NB. required for lab to proceed
+)
+
+
+
+
+NB. =========================================================
+Lab Section Create turtles 
+
+The verb (createTurtle) produces on the graphics pane one or
+more turtles at designated coordinate locations. Optionally,
+the left argument determines turtle orientation using a
+quaternion which has a default value of 1 0 0 0 for which
+the turtle faces along the x axis (east). Each created
+turtle is assigned an integer index value which is the
+result of (createTurtle)'s execution. Each index
+may be assigned to a name-defining noun using a copula, =: . 
+
+   createTurtle 0 0 0,10 0 0,:0 _10 0 NB. notice:0 1 2 result
+   positions    NB. 3 turtles, 3 rows, 3-digit coordinates
+)
+
+
+NB. =========================================================
+Lab Section Turn turtles 
+
+The main turning verbs are (yaw), (roll) and (pitch).
+Variations [such as (right) and (left)], and abbreviations are 
+available too.
+
+The resulting orientations of turtles are kept 
+in the noun (orientations) as quaternions. 
+Direction cosines can be produced too.
+
+     orientations        NB. before turns
+     yaw 90 180 270
+     orientations        NB. after  turns
+     2 rndm dircos"1 orientations  NB.rndm rounds off
+)
+
+NB. =========================================================
+Lab Section Graphics pane
+
+There are several ways to adjust the graphics pane.
+For example you can drag its edges and corners, 
+or drag it around on the screen.
+
+Also, from the Term window there are a few commands:
+
+    bgcolor Black,0.2  NB. changes background color
+    clearlines ''      NB. destroys all lines
+    clearscreen ''     NB. destroys all turtles and lines
+)
+
+
+NB. =========================================================
+Lab Section Turtle command arguments
+
+Turtle commands accept either 1 or 2 arguments. 
+They are referred to as ambivalent verbs because 
+they can accept either only a right-hand argument [monadic]
+or left- and right-hand arguments [dyadic].
+
+The monadic turtle verbs apply a single right-hand argument 
+to all existing turtles or if there are n turtles 
+and a list of n quantities or n "quantity-groups", 
+then one is supplied to each turtle, respectively. 
+
+Quantity-groups are typically triples of xyz coordinates or
+RGB color fractions. Single quantities are typically turn
+angles, movement amounts, or boolean. In a previous section,
+(createTurtle) was give 3 quantity-groups, each an xyz
+coordinate.
+
+Quantities can be supplied as a space-delimited list.
+Quantity-groups can be supplied as a (,)- and (,:)-delimited
+list typically using a pattern like the (createTurtle) 
+example. More examples are provided later.
+
+Dyadic turtle verbs make it possible to control subsets
+of the turtles using their indices listed in the left-hand
+argument (where the sequence of the left- and right-hand
+arguments determines the subset). But (createTurtle) is the
+exception in this regard, because its left-hand argument is
+not a list of turtle indices.
+)
+
+
+
+NB. =========================================================
+Lab Section Move turtles 
+
+The main movement verbs are (forward), (back), (jumpup), 
+(jumpdown), (jumpright), and (jumpleft). Abbreviations, too. 
+
+The monadic and dyadic versions of the movement verbs 
+apply like the ones for turning verbs.
+
+     clearscreen '' 
+     'a b c'=: createTurtle 0 0 0,10 0 0,:0 _10 0 
+     forward 10 _20 30
+     positions
+     c jumpright 10  NB. 'c is 2 from above'
+     positions
+)
+
+NB. =========================================================
+Lab Section Turn turtles toward coordinates
+
+The verb (turnto) takes coordinate lists as right-hand 
+argument. A single list with no left-hand argument 
+turns all turtles to the same coordinate. As with 
+the movement and turn verbs, the dyadic (turnto) 
+must contain equal numbers of items.
+
+     turnto 20 20 0
+     orientations
+     2 rndm dircos"1 orientations
+     1 2 turnto 40 50 0,:_20 _30 0
+)
+
+NB. =========================================================
+Lab Section Turn and move the camera/eye
+
+When the camera [or eye] turns or moves, all turtles 
+turn or move together. To do so, first click on the 
+graphics pane to give it focus. Then try clicking 
+the keys listed at the top of the screen. 
+
+F4 rotates the eye continuously until it is clicked again.
+F3 returns the eye to its original position.
+Explore.
+
+Click back on the Term pane to rotate 
+and translate the eye specific amounts.
+(rotR) and (translate) are both monadic verbs 
+accepting a single list of 3 numbers to set 
+new values; or an empty ('') to report the 
+current value.
+
+Some examples are given next.
+
+    rotR''
+    translate''
+    rotR 0 0 0
+    translate _2 0 _10
+)
+
+NB. =========================================================
+Lab Section Turtle pen
+
+The (pen) verb is either monadic or dyadic and controls 
+whether each turtles pen is down (1) or up (0). The 
+default state is pen down. 
+The noun (penStates) contains the current values.
+
+The (penColor) verb assigns colors to the pens.
+The default color is White. 
+The noun (penColors) contains the current values 
+expressed as RGB fractions.
+Colors available can are available with the following
+command.
+list '='taketo"1 COLORTABLE  NB. not required
+
+    NB. next assumes at least 3 turtles
+    1 2 penColor Red,:Blue
+    penColors      NB. rgb fractions
+    forward 20 
+    pen 0
+    forward 20
+    penStates
+    pen 1
+)
+
+NB. =========================================================
+Lab Section Turtle color and scale
+
+The colors and sizes of individual turtles and their eyes
+are readily altered with the verbs 
+(turtleColor), (turtleScale), and (turtleEyeColor). 
+The states of these attributes are maintained in the nouns 
+(turtleColors), (turtleScales), and (turtleEyeColors) 
+which follow the pluralization patterrn of other states.
+
+As was the case with (penColor), colors are RGB fractions 
+and many common color names are also available. 
+
+Turtles have 4 sides: (Back), (Right), (Left), and (Bottom). 
+So each turtle has 4 colors [2 of which are often the same], 
+and the colors are maintained, in that order.
+Default colors are assigned Red,Blue,Blue,:White .
+
+Turtles have 2 eyes: (Right) and (Left). 
+So each turtle has 2 eye colors [usually the same], 
+and the colors are maintained, in that order.
+Default colors are assigned Black,:Black.
+
+    NB. next assumes at least 2 turtles
+    0 1 turtleColor(Red,Tan,Tan,:White),:Red,Plum,Plum,:White
+    1 0 turtleEyeColor(White,:White),:Blue,:Blue
+    yw 45
+    1 0 turtleScale 0 2
+)
+
+NB. =========================================================
+Lab Section Go slow and repeats 
+
+(repeats) is a defined conjunction that makes it 
+possible to repeat the same command(s) as many times 
+as the left-hand numeric argument of (repeats) dictates.
+Another feature of J that permits multiple commands 
+on a single line is the (left) identity primitive, ([) .
+Both of these features are suggested by the commands 
+suggested here.
+
+(repeats) has the following 2 usage patterns.
+
+xarg number repeats <turtle movement command> yarg
+
+or
+
+number repeats do '<turtle movement command with args>'
+
+Because the second usage pattern of (repeats) needs to have 
+its commands and arguments contained in single quotes, 
+any single quotes inside the rightmost string must be 
+doubled.
+
+To slow the turtle actions to see them better, the verb 
+(msec y) can be employed as in 
+msec 200
+which delays each action by 0.2 seconds. 
+
+     10 (3) repeats (fd@[[yw@])  90
+     10 (3) repeats fdyw 90
+     
+     createTurtle 0 0 0[clearscreen'' 
+     msec 200
+     20 repeats do 'yw 18[5 repeats do ''yw 72[fd 25'''
+     msec 0
+)
+
+NB. =========================================================
+Lab Section Drawing some polygraphs
+
+The verbs (poly) and (poly3) are based on the turtle graphics 
+text by Abelson and diSessa. You can view them by 
+entering their names. Although they have similar arguments 
+their behavior is quite different.
+
+(distance poly angle): 
+for select distances and angles, produces polynomials in 
+2 dimensions. For example try angles like 72 60 90 108 135.
+
+    createTurtle 0 0 0[clearscreen'' 
+    poly
+    20 poly 144
+         
+(distance poly3 angle): 
+for select distances and angles, produces polynomials in 
+3 dimensions. 
+
+    createTurtle 0 0 0[clearscreen'' 
+    poly3
+    3 poly3 30
+)
+
+
+NB. =========================================================
+Lab Section Stereo 3d perspective
+
+Another more complicated option permits side-by-side 
+3d stereo views for either cross-eyed or parallel 
+viewing: 
+
+(stereo y)
+
+where y is typically a fraction
+between _0.1 and 0.1; and where 0 is the default 
+signalling no stereo viewing. Negative y values 
+produce cross-eyed perspectives; positive y 
+values produce parallel perspectives. 
+
+     clearscreen''
+     createTurtle 0.1 0 0
+     translate _2 0 _9
+     rotR 0 0 0
+     pen 0
+     stereo _0.1   NB. drag to maximize your screen size?
+     lorenz ^:250 positions   NB. warmup
+     pen 1
+     lorenz ^:500 positions   NB. repeat this?
+     stereo 0
+)
+
+
