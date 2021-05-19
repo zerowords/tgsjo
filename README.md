@@ -1,5 +1,7 @@
 # tgsjo
 A "modern" openGL turtle graphics/turtle geometry system using the J programming language
+
+**This addon can only be executed in jQt**
 ```
 Turtle commands control multiple turtles at once with J's tradtional "ambivalent" arguments.
 The monadic (right-hand argument) versions supply quantitative values to all turtles.
@@ -33,6 +35,7 @@ installed: zerowords/tgsjo master
 manifest.ijs             292 29-Sep-20 16:26:06
 readme.ijs              4374 23-Sep-20 17:14:52
 tgsjo.ijs              13687 29-Sep-20 16:23:02
+tgsjo.ijt               9616 19-May-21 17:05:49
 tgsjoalias.ijs           440 29-Sep-20 16:23:02
 tgsjoglobals.ijs        3676 29-Sep-20 16:23:02
 tgsjoinit.ijs           1334 29-Sep-20 16:23:02
@@ -44,6 +47,14 @@ tgsjoslow.ijs           1685 29-Sep-20 16:33:41
 
 ## Run tgsjo
 ```
+NB. This addon can only be executed in jQt
 load 'zerowords/tgsjo'
 createTurtle 0 0 0
+```
+
+## Run Lab tgsjo.ijt 
+```
+NB. This Lab can only be executed in jQt
+load'labs/labs'
+lab_jlab_ jpath'~addons/zerowords/tgsjo/tgsjo.ijt'
 ```
