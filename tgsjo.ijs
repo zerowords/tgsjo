@@ -114,13 +114,13 @@ GLSL=: 0
 Bcolor=: 0.501961 0.501961 0.501961 1 NB. glClearColor Gray
 Bcolor=: 0 0 0 1 NB. glClearColor Black
 
-wd TGSO
+wd rplc&(' opengl ';' opengl version 4.1 ')^:((GLSL>120)*.'Darwin'-:UNAME) TGSO
 GO=: 0[HD=: ".wd'qhwndc g'
 wd 'ptimer 100'  NB. controls speed of R rotation
 wd 'pshow'
 gl_paint''
-smoutput Instructions
 wd 'sm focus term'
+smoutput Instructions
 )
 
 NB. used for turtle moves and turns
@@ -256,8 +256,9 @@ rplcnm=:2 :0
 )
 
 vcompat=:3 :0
-fsrc=. 1 e. ' invary ' E. y
-v=.'' if.120<:GLSL=.wglGLSL'' do.
+NB. fsrct=. 1 e. ' invary ' E. y
+fsrct=. 1 e. 'invary ' E. y
+v=.'' if.120>:GLSL=.wglGLSL'' do.
 y=. 'inattr' rplcnm 'attribute' y
 y=. 'invary' rplcnm 'varying' y
 y=. 'outvary' rplcnm 'varying' y
@@ -270,8 +271,12 @@ end.
       y=. 'invary' rplcnm 'in' y
       y=. 'outvary' rplcnm 'out' y
   end.
-  if. fsrc * (GLSL>:300) * 0~:GLES_VERSION do.
-      y=. 'void main' rplcnm ('out vec4 gl_FragColor;',LF,'void main') y
+  NB. smoutput fsrct ; (GLSL>:300) ; GLES_VERSION 
+  NB. if. fsrct * (GLSL>:300) * 0~:GLES_VERSION do.
+  if. fsrct * (GLSL>:300) +. 0~:GLES_VERSION do.
+      NB. y=. 'void main' rplcnm ('out vec4 gl_FragColor;',LF,'void main') y
+      y=. 'void main' rplcnm ('out vec4 fragColor;',LF,'void main') y
+      y=. 'gl_FragColor' rplcnm ('fragColor') y
   end.
   v=.'#version ',(":GLSL),(GLSL>:300)#(*GLES_VERSION){::' core';' es'
   v,LF,y
@@ -281,6 +286,10 @@ tgsj_g_initialize=: 3 :0
 if.showGl''do.return.end.
 wglPROC''
 GLSL=: wglGLSL''
+if. GLSL>120 do.
+   vao=:>@{:glGenVertexArrays 1;1#_1
+   glBindVertexArray {.vao
+end.
 'vsrc fsrc'=: vcompat each vsrcMeta;fsrcMeta NB. save for inspection
 vbo=: 2{:: er glGenBuffers (;#&_1)#;:'vertex norm color line lcolor'  
 'err prog'=. gl_makeprogram vsrc;fsrc
@@ -342,7 +351,9 @@ fd 0
 )
 
 paint_handler=: 3 : 0
+smoutput 'a**********'
 if. 0=sprog do. return. end.
+smoutput 'd**********'
 
 viewport=. 0 0,wh=. dpiLevel*gl_qwh''
 viewportl=. 0 180,-:wh
@@ -351,6 +362,7 @@ viewportr=. (-:0{wh), 180,-:wh
 er glClearColor Bcolor
 er glClear GL_COLOR_BUFFER_BIT + GL_DEPTH_BUFFER_BIT
 
+smoutput 'b**********'
 er glUseProgram sprog
 er glEnable GL_DEPTH_TEST
 NB. glEnable GL_CULL_FACE
@@ -384,6 +396,10 @@ NB. note GL_FALSE, no transpose
 er glUniformMatrix4fv mvpUni; 1; GL_FALSE; MVP
 er glViewport vp{<.VP
 vp=. 1
+if. GLSL>120 do.
+smoutput 'e**********'
+   glBindVertexArray {.vao
+end.
 
 paint_vertex_buffers vertexpaint
 
@@ -398,6 +414,7 @@ end.
 er glDisable GL_DEPTH_TEST
 
 er glUseProgram 0
+smoutput 'c**********'
 
     er gl_clear ''
     er gl_rgb 255 255 255
