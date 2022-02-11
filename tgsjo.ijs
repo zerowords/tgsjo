@@ -1,5 +1,6 @@
 NB. tgsjo.ijs NB. 9/21/20 
 NB. tgsjo.ijs NB. 4/10/21 
+NB. tgsjo.ijs NB. 2/10/22 
 
 cocurrent 'tgsjo'
 require 'gl2 gles ~addons/ide/qt/opengl.ijs'
@@ -114,13 +115,13 @@ GLSL=: 0
 Bcolor=: 0.501961 0.501961 0.501961 1 NB. glClearColor Gray
 Bcolor=: 0 0 0 1 NB. glClearColor Black
 
-wd TGSO
+wd rplc&(' opengl ';' opengl version 4.1 ')^:((GLSL>120)*.'Darwin'-:UNAME) TGSO
 GO=: 0[HD=: ".wd'qhwndc g'
 wd 'ptimer 100'  NB. controls speed of R rotation
 wd 'pshow'
 gl_paint''
-smoutput Instructions
 wd 'sm focus term'
+smoutput Instructions
 )
 
 NB. used for turtle moves and turns
@@ -256,8 +257,9 @@ rplcnm=:2 :0
 )
 
 vcompat=:3 :0
-fsrc=. 1 e. ' invary ' E. y
-v=.'' if.120<:GLSL=.wglGLSL'' do.
+NB. fsrct=. 1 e. ' invary ' E. y
+fsrct=. 1 e. 'invary ' E. y
+v=.'' if.120>:GLSL=.wglGLSL'' do.
 y=. 'inattr' rplcnm 'attribute' y
 y=. 'invary' rplcnm 'varying' y
 y=. 'outvary' rplcnm 'varying' y
@@ -270,8 +272,9 @@ end.
       y=. 'invary' rplcnm 'in' y
       y=. 'outvary' rplcnm 'out' y
   end.
-  if. fsrc * (GLSL>:300) * 0~:GLES_VERSION do.
-      y=. 'void main' rplcnm ('out vec4 gl_FragColor;',LF,'void main') y
+  if. fsrct * (GLSL>:300) +. 0~:GLES_VERSION do.
+      y=. 'void main' rplcnm ('out vec4 fragColor;',LF,'void main') y
+      y=. 'gl_FragColor' rplcnm ('fragColor') y
   end.
   v=.'#version ',(":GLSL),(GLSL>:300)#(*GLES_VERSION){::' core';' es'
   v,LF,y
@@ -281,6 +284,10 @@ tgsj_g_initialize=: 3 :0
 if.showGl''do.return.end.
 wglPROC''
 GLSL=: wglGLSL''
+if. GLSL>120 do.
+   vao=:>@{:glGenVertexArrays 1;1#_1
+   glBindVertexArray {.vao
+end.
 'vsrc fsrc'=: vcompat each vsrcMeta;fsrcMeta NB. save for inspection
 vbo=: 2{:: er glGenBuffers (;#&_1)#;:'vertex norm color line lcolor'  
 'err prog'=. gl_makeprogram vsrc;fsrc
@@ -305,7 +312,7 @@ gl_paint ''
 )
 
 tgsj_timer=: 3 : 0
-if. 0=GO do. return. end.
+if. 0=GO do. gl_paint'' return. end.
 R=: 360 | R + 2 * 1 1 1
 gl_sel HD
 gl_paint''
@@ -384,6 +391,9 @@ NB. note GL_FALSE, no transpose
 er glUniformMatrix4fv mvpUni; 1; GL_FALSE; MVP
 er glViewport vp{<.VP
 vp=. 1
+if. GLSL>120 do.
+   glBindVertexArray {.vao
+end.
 
 paint_vertex_buffers vertexpaint
 
