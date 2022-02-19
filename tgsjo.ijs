@@ -34,6 +34,8 @@ while. errnum=. {.;{.glGetError''do.
     ndx=. ((16b500+i.8),16b8031)i.errnum
     echo ndx{::GL_ERRLIST
     'breakpoint here to capture stack'
+    wd'timer 0; ptimer 0'
+    assert. 0
 end.
 )
 err=:1 :0 NB. m: _1 means numeric result and only _1 is error
@@ -226,8 +228,8 @@ r=.r, GL_ARRAY_BUFFER,(j{buffers),namedAttr,{:$j{::y
 clearscreen=: monad define
 initTurtle''
 erase ;:'lineData lcolorData'
-vertex_clear=: 'vertex norm color' 10 clear_vertex_buffers sceneTriangles;sceneNormals;sceneColors
-linepaint=: 'vertex color' 10 clear_line_buffers sceneLines;sceneLcolors
+vertex_clear=: 'vertex norm color' sprog clear_vertex_buffers sceneTriangles;sceneNormals;sceneColors
+linepaint=: 'vertex color' sprog clear_line_buffers sceneLines;sceneLcolors
 sendGeometry sprog
 renderTurtles''
 )
@@ -236,7 +238,7 @@ clearlines=: monad define
 erase ;:'lineData lcolorData'
 pathlines=: i. 0 6
 pathcolors=: i. 0 6
-linepaint=: 'vertex color' 10 clear_line_buffers sceneLines;sceneLcolors
+linepaint=: 'vertex color' sprog clear_line_buffers sceneLines;sceneLcolors
 gl_paint''
 )
 
