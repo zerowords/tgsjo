@@ -226,12 +226,14 @@ r=.r, GL_ARRAY_BUFFER,(j{buffers),namedAttr,{:$j{::y
 )
 
 clearscreen=: monad define
+if.sprog do.
 initTurtle''
 erase ;:'lineData lcolorData'
 vertex_clear=: 'vertex norm color' sprog clear_vertex_buffers sceneTriangles;sceneNormals;sceneColors
 linepaint=: 'vertex color' sprog clear_line_buffers sceneLines;sceneLcolors
 sendGeometry sprog
 renderTurtles''
+end.
 )
 
 clearlines=: monad define
