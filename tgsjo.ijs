@@ -113,11 +113,13 @@ EYE=: EYE0=: 0 0 1
 LR=: UD=: IO=: 0
 UP=: 0 1 0
 sprog=: 0
-GLSL=: 0
+NB. GLSL=: 0
 Bcolor=: 0.501961 0.501961 0.501961 1 NB. glClearColor Gray
 Bcolor=: 0 0 0 1 NB. glClearColor Black
 
-wd rplc&(' opengl ';' opengl version 4.1 ')^:((GLSL>120)*.'Darwin'-:UNAME) TGSO
+chkver=.10709 <100 100 100 #. ".'. ' charsub '/'taketo wd'version'
+wd rplc&(' opengl ';' opengl version 4.1 ')^:(chkver*.'Darwin'-:UNAME) TGSO
+NB. wd rplc&(' opengl ';' opengl version 4.1 ')^:((GLSL>120)*.'Darwin'-:UNAME) TGSO
 GO=: 0[HD=: ".wd'qhwndc g'
 wd 'ptimer 100'  NB. controls speed of R rotation
 wd 'pshow'
@@ -316,10 +318,11 @@ gl_paint ''
 )
 
 tgsj_timer=: 3 : 0
-if. 0=GO do. gl_paint'' return. end.
+if. 0=GO do. EMPTY[gl_paint'' return. end.
+NB. if. 0=GO do.  return. end.
 R=: 360 | R + 2 * 1 1 1
 gl_sel HD
-gl_paint''
+EMPTY[gl_paint''
 )
 
 tgsj_g_paint=:3 :0
@@ -328,7 +331,7 @@ catch.
     echo 'caught error in tgsj_g_paint'
     echo 13!:12 ''
     wd'timer 0'
-end.
+end.EMPTY
 )
 
 ff =: [,~-@],],-@],]
