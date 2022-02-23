@@ -124,8 +124,8 @@ GO=: 0[HD=: ".wd'qhwndc g'
 wd 'ptimer 100'  NB. controls speed of R rotation
 wd 'pshow'
 gl_paint''
-wd 'sm focus term'
 smoutput Instructions
+wd 'sm focus term'
 )
 
 NB. used for turtle moves and turns
