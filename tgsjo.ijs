@@ -117,7 +117,7 @@ NB. GLSL=: 0
 Bcolor=: 0.501961 0.501961 0.501961 1 NB. glClearColor Gray
 Bcolor=: 0 0 0 1 NB. glClearColor Black
 
-chkver=.10709 <100 100 100 #. ".'. ' charsub '/'taketo wd'version'
+chkver=.10709 <100 100 100 #. 3{.".(":i.10) (e.~([#inv#)])wd'version'
 wd rplc&(' opengl ';' opengl version 4.1 ')^:(chkver*.'Darwin'-:UNAME) TGSO
 NB. wd rplc&(' opengl ';' opengl version 4.1 ')^:((GLSL>120)*.'Darwin'-:UNAME) TGSO
 GO=: 0[HD=: ".wd'qhwndc g'
