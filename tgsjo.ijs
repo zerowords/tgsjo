@@ -15,6 +15,7 @@ path=. (tgsjopath'')&,
 
 require path 'tgsjoalias.ijs'
 require path 'tgsjoslow.ijs'
+stop''
 require 'math/misc/quatern'
 
 painter_ready=: initialized=: 0
