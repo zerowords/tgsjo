@@ -125,7 +125,15 @@ wd 'ptimer 100'  NB. controls speed of R rotation
 wd 'pshow'
 gl_paint''
 smoutput Instructions
-wd 'sm focus term'
+(wd bind 'sm focus term' ) scheduledumb ''
+)
+
+tconj=: 2 : 'u y[erase n'
+scheduledumb=: adverb define
+  id=.'dumb',":x:6!:9''
+  wd 'pc ',id
+  (t)=: u tconj (t=. id,'_timer')y
+  wd 'ptimer 1'
 )
 
 NB. used for turtle moves and turns
